@@ -27,7 +27,7 @@ flows:
     - call: gitClosePullRequestPerBranch
 
   gitClosePullRequestPerBranch:
-    - expr: ${pullRequests.stream().filter(i -> projectName.equal(i.projectName)).map(i -> i.prNumber).toList()}
+    - expr: ${pullRequests.stream().filter(i -> projectName.equals(i.projectName)).map(i -> i.prNumber).toList()}
       out: retrievePullRequests
     - log: "Retrieved Pull Request: ${retrievePullRequests}"
 
