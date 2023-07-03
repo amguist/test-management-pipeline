@@ -27,9 +27,9 @@ flows:
     - call: gitDeleteBranch
 
   gitDeleteBranch:
-    - task: git
+    - task: github
       in:
-        action: deleteBranch
+        action: "deleteBranch"
         accessToken: ${githubToken}
         org: ${organization}
         repo: ${projectName}
