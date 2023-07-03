@@ -18,4 +18,6 @@ configuration:
 
 flows:
   default:
+    - set:
+        githubToken: "${crypto.exportAsString('neoworkz', 'neoworkz_github_token', null)}"
     - log: "Deployment Concord Pipeline | This is the default flow"
