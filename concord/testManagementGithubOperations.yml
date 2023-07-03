@@ -24,15 +24,20 @@ flows:
     - checkpoint: "Clean_Up_${branch}_${projectName}"
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat(".git")}
       out: apiUrl
+    - expr: ${pullRequests.stream().filter(i -> projectName.equals(i.projectName)).map(i -> i.prNumber).toList()}
+      out: retrievedPullRequests
     - call: gitClosePullRequestPerBranch
+      withItems: ${retrievedPullRequests}
 
   gitClosePullRequestPerBranch:
-    - expr: ${pullRequests.stream().filter(i -> projectName.equals(i.projectName)).map(i -> i.prNumber).toList()}
-      out: retrievePullRequests
-    - log: "Retrieved Pull Request: ${retrievePullRequests}"
-
-    - call: gitDeleteBranch
-
+    - log: "Closing Pull Request For ${projectName} with PR Identifier: ${item}"
+    - task: github
+      in:
+        action: "closePR"
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${projectName}
+        prId: ${item}
 
   gitDeleteBranch:
     - task: github
