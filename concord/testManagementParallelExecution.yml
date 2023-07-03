@@ -1,7 +1,3 @@
-configuration:
-  arguments:
-    productRepositories: [ "test-product" ]
-
 flows:
   parallelExecutionMain:
     - log: "Deployment Concord Pipeline | Parallel Execution has been invoked ...."
