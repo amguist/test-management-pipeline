@@ -28,6 +28,7 @@ flows:
       out: retrievedPullRequests
     - call: gitClosePullRequestPerBranch
       withItems: ${retrievedPullRequests}
+    - call: gitDeleteBranch
 
   gitClosePullRequestPerBranch:
     - log: "Closing Pull Request For ${projectName} with PR Identifier: ${item}"
