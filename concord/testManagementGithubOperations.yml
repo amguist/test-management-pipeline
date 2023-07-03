@@ -121,6 +121,6 @@ flows:
     - set:
         pullRequestDetails:
           projectName: ${projectName}
-          prNumber: ${prId}
+          prNumber: ${myPrId}
           pullRequestUrl: ${pullRequestUrl}
     - ${pullRequests.add(pullRequestDetails)}
