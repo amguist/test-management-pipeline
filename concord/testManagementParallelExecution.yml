@@ -15,7 +15,14 @@ flows:
         libraryVersion: ${libraryVersion}
         organization: ${organization}
         processId: ${txId}
-    - log: "Value of action: ${parallelApproval.action}"
+    - checkpoint: "Initiate_${branch}_Cleanup"
+    - call: cleanup-repositories
+      withItems: ${productRepositories}
+
+  cleanup-repositories:
+    - call: performCleanupOperations
+      in:
+        projectName: ${item}
 
   manage-repositories:
     - call: verifyGithubBranch

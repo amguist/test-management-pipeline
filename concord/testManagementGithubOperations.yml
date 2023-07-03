@@ -22,6 +22,8 @@ flows:
 
   performCleanupOperations:
     - checkpoint: "Clean_Up_${branch}_${projectName}"
+    - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat(".git")}
+      out: apiUrl
     - call: gitDeleteBranch
 
   gitDeleteBranch:
