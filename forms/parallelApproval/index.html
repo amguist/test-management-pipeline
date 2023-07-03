@@ -20,7 +20,7 @@
             </div>
         </div>
         <form id="parallelApproval" class="ui form">
-            <input type="hidden" id="action" name="action" value="reject">
+            <input type="hidden" id="action" name="action" value=false>
             <div class="ui two column stackable grid">
                 <div class="three column row">
                     <div class="column">
@@ -90,7 +90,7 @@
             $("#parallelApproval").submit(function(e) {
                 e.preventDefault();
                 var button = document.getElementById("customFormSubmitButton");
-                $('input[name="action"]:hidden').val("approve");
+                $('input[name="action"]:hidden').val(true);
                 button.classList.add("loading");
 
                 $.ajax({

@@ -20,7 +20,7 @@ configuration:
 
 forms:
   parallelApproval:
-    - action: { type: "string" }
+    - action: { type: boolean }
 
 flows:
   default:
