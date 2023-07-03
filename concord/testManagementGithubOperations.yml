@@ -12,9 +12,13 @@ flows:
       then:
         - checkpoint: "Update_${branch}_${projectName}"
         - call: gitCloneBranch
+          in:
+            url: ${apiUrl}
       else:
         - checkpoint: "Create_${branch}_${projectName}"
         - call: gitCreateBranch
+          in:
+            url: ${apiUrl}
 
   gitCloneBranch:
     - task: git
