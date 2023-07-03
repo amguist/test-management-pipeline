@@ -6,9 +6,9 @@ flows:
         import java.nio.file.*
         import groovy.xml.*
         
-        def pomFileContents = new XmlSlurper(false,false).parse(new File("${item}/pom.xml))
+        def pomFileContents = new XmlSlurper(false,false).parse(new File("${item}/pom.xml"))
         def libraryVersion = libraryVersion.toString()
-        def updateDest = Paths.get("${item}/pom.xml)
+        def updateDest = Paths.get("${item}/pom.xml")
         
         pomFileContents.properties.each {  it.'common.revision' = libraryVersion }
         
