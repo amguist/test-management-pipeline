@@ -2,6 +2,7 @@ flows:
   parallelExecutionMain:
     - set:
         githubToken: "${crypto.exportAsString('neoworkz', 'github_token', null)}"
+        pullRequests: [ ]
     - log: "Deployment Concord Pipeline | Parallel Execution has been invoked ...."
     - checkpoint: "Start Parallel Execution"
     - call: manage-repositories

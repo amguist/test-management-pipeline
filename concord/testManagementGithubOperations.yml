@@ -24,7 +24,15 @@ flows:
     - checkpoint: "Clean_Up_${branch}_${projectName}"
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat(".git")}
       out: apiUrl
+    - call: gitClosePullRequestPerBranch
+
+  gitClosePullRequestPerBranch:
+    - expr: ${pullRequests.stream().filter(i -> i.projectName.equal(${projectName}).map(i -> i.prNumber).toList()}
+      out: retrievePullRequests
+    - log: "Retrieved Pull Request: ${retrievePullRequests}"
+
     - call: gitDeleteBranch
+
 
   gitDeleteBranch:
     - task: github
@@ -72,6 +80,7 @@ flows:
             filePath: "${workDir}/${projectName}"
         - call: patch-repo-pom-xml
         - call: gitCommitBranch
+        - call: createBranchPR
       else:
         - log: "Error occurred while creating necessary branch ...."
 
@@ -92,3 +101,26 @@ flows:
     - if: "${!response.ok}"
       then:
         - throw: "Error occurred while performing the commit"
+
+  createBranchPR:
+    - task: github
+      in:
+        action: "createPR"
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${projectName}
+        prTitle: "[${branch}-IMA-Test]"
+        prBody: ""
+        prSourceBranch: ${branch}
+        prDestinationBranch: "main"
+      out:
+        myPrId: ${prId}
+
+    - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat("/pull/").concat(myPrId)}
+      out: pullRequestUrl
+    - set:
+        pullRequestDetails:
+          projectName: ${projectName}
+          prNumber: ${prId}
+          pullRequestUrl: ${pullRequestUrl}
+    - ${pullRequests.add(pullRequestDetails)}
