@@ -12,6 +12,7 @@ configuration:
       apiUrl: "https://github.com/api/v3"
     githubToken: ""
     organization: ""
+    productRepositories: [ "test-product" ]
     repo: ""
     version: ""
 
