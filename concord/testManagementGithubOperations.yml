@@ -50,8 +50,7 @@ flows:
         - set:
             filePath: "${workDir}/${projectName}"
         - call: patch-repo-pom-xml
-          in:
-            project: ${projectName}
+        - call: gitCommitBranch
       else:
         - log: "Error occurred while cloning necessary branch ...."
 
@@ -72,6 +71,7 @@ flows:
         - set:
             filePath: "${workDir}/${projectName}"
         - call: patch-repo-pom-xml
+        - call: gitCommitBranch
       else:
         - log: "Error occurred while creating necessary branch ...."
 
