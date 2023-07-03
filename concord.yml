@@ -11,6 +11,8 @@ configuration:
     githubParam:
       apiUrl: "https://api.github.com/octocat"
     githubToken: ""
+    libraryName: "common-library"
+    libraryVersion: "0.0.1-SNAPSHOT"
     organization: "amguist"
     productRepositories: [ "test-product" ]
     repo: ""
