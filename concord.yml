@@ -9,7 +9,7 @@ configuration:
     entryPoint: deploy
     event: ""
     githubParam:
-      apiUrl: "https://github.com/api/v3"
+      apiUrl: "https://api.github.com/octocat"
     githubToken: ""
     organization: "amguist"
     productRepositories: [ "test-product" ]
