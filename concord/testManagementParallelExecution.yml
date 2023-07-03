@@ -15,6 +15,7 @@ flows:
         libraryVersion: ${libraryVersion}
         organization: ${organization}
         processId: ${txId}
+    - log: "Value of action: ${parallelApproval.action}"
 
   manage-repositories:
     - call: verifyGithubBranch

@@ -19,7 +19,8 @@
                 </div>
             </div>
         </div>
-        <form id="parallelApprovalForm" class="ui form">
+        <form id="parallelApproval" class="ui form">
+            <input type="hidden" id="action" name="action" value="reject">
             <div class="ui two column stackable grid">
                 <div class="three column row">
                     <div class="column">
@@ -86,9 +87,10 @@
                 document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
             }
 
-            $("#deploymentForm").submit(function(e) {
+            $("#parallelApproval").submit(function(e) {
                 e.preventDefault();
                 var button = document.getElementById("customFormSubmitButton");
+                $('input[name="action"]:hidden').val("approve");
                 button.classList.add("loading");
 
                 $.ajax({
