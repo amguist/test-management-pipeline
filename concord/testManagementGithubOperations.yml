@@ -1,7 +1,5 @@
 flows:
   performGithubOperations:
-    - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat(".git")}
-      out: apiUrl
     - task: github
       in:
         action: ${actionName}
