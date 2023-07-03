@@ -1,8 +1,50 @@
 flows:
   performGithubOperations:
+    - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat(".git")}
+      out: apiUrl
     - task: github
       in:
         action: ${actionName}
         accessToken: ${githubToken}
         org: ${organization}
         repo: ${projectName}
+    - if: ${branchList.contains(entityId)}
+      then:
+        - log: "Branch Exists ..."
+      else:
+        - log: "Branch Does Not Exist ...."
+
+  gitCloneBranch:
+    - task: git
+      in:
+        action: clone
+        workingDir: ${projectName}
+        auth:
+          basic:
+            token: ${githubToken}
+        baseBranch: ${branch}
+        out: "response"
+    - if: "${response.ok}"
+      then:
+        - log: "Successfully Cloned Needed Branch For Updates"
+      else:
+        - log: "Error occurred while cloning necessary branch ...."
+
+
+  gitCreateBranch:
+    - task: git
+      in:
+        action: createBranch
+        workingDir: ${projectName}
+        auth:
+          basic:
+            token: ${githubToken}
+        baseBranch: "main"
+        newBranch: ${branch}
+        pushBranch: true
+        out: "response"
+    - if: "${response.ok}"
+      then:
+        - log: "Successfully Created Needed Branch For Updates"
+      else:
+        - log: "Error occurred while creating necessary branch ...."
