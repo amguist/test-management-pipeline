@@ -16,6 +16,9 @@ configuration:
     repo: ""
     version: ""
 
+forms:
+  parallelApproval:
+    - approved: { type: boolean }
 
 flows:
   default:

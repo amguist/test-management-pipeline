@@ -6,6 +6,15 @@ flows:
     - checkpoint: "Start Parallel Execution"
     - call: manage-repositories
       withItems: ${productRepositories}
+    - checkpoint: "Test_Approval"
+    - form: parallelApproval
+      values:
+        branch: ${branch}
+        executedBy: ${currentUser.userName}
+        libraryName: ${libraryName}
+        libraryVersion: ${libraryVersion}
+        organization: ${organization}
+        processId: ${txId}
 
   manage-repositories:
     - call: verifyGithubBranch

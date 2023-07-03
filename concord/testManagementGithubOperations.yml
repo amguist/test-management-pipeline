@@ -20,6 +20,19 @@ flows:
           in:
             url: ${apiUrl}
 
+  performCleanupOperations:
+    - checkpoint: "Clean_Up_${branch}_${projectName}"
+    - call: gitDeleteBranch
+
+  gitDeleteBranch:
+    - task: git
+      in:
+        action: deleteBranch
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${projectName}
+        branch: ${branch}
+
   gitCloneBranch:
     - task: git
       in:
@@ -32,10 +45,10 @@ flows:
         out: "response"
     - if: "${response.ok}"
       then:
-        - log: "Successfully Cloned Needed Branch For Updates"
+        - set:
+            filePath: "${workDir}/${projectName}"
       else:
         - log: "Error occurred while cloning necessary branch ...."
-
 
   gitCreateBranch:
     - task: git
@@ -51,6 +64,8 @@ flows:
         out: "response"
     - if: "${response.ok}"
       then:
-        - log: "Successfully Created Needed Branch For Updates"
+        - set:
+            filePath: "${workDir}/${projectName}"
+
       else:
         - log: "Error occurred while creating necessary branch ...."
