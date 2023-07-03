@@ -10,9 +10,11 @@ flows:
         repo: ${projectName}
     - if: ${branchList.contains(entityId)}
       then:
-        - log: "Branch Exists ..."
+        - checkpoint: "Update_${branch}_${projectName}"
+        - call: gitCloneBranch
       else:
-        - log: "Branch Does Not Exist ...."
+        - checkpoint: "Create_${branch}_${projectName}"
+        - call: gitCreateBranch
 
   gitCloneBranch:
     - task: git
