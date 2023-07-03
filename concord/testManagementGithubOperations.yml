@@ -49,6 +49,9 @@ flows:
       then:
         - set:
             filePath: "${workDir}/${projectName}"
+        - call: patch-repo-pom-xml
+          in:
+            project: ${projectName}
       else:
         - log: "Error occurred while cloning necessary branch ...."
 
@@ -68,6 +71,24 @@ flows:
       then:
         - set:
             filePath: "${workDir}/${projectName}"
-
+        - call: patch-repo-pom-xml
       else:
         - log: "Error occurred while creating necessary branch ...."
+
+  gitCommitBranch:
+    - task: git
+      in:
+        action: commit
+        workingDir: ${projectName}
+        auth:
+          basic:
+            token: ${githubToken}
+        baseBranch: ${branch}
+        commitMessage: "Updating Branch common.version for IMA Testing"
+        commitUsername: "amguist"
+        commitEmail: "rhon.guist@gmail.com"
+        pushChanges: true
+        out: response
+    - if: "${!response.ok}"
+      then:
+        - throw: "Error occurred while performing the commit"
