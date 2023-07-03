@@ -5,13 +5,13 @@ configuration:
     - mvn://org.codehaus.groovy:groovy-all:pom:2.5.2
 
   arguments:
-    branch: ""
+    branch: "SCTHAWKEYE-3341"
     entryPoint: deploy
     event: ""
     githubParam:
       apiUrl: "https://github.com/api/v3"
     githubToken: ""
-    organization: ""
+    organization: "amguist"
     productRepositories: [ "test-product" ]
     repo: ""
     version: ""
