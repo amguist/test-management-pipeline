@@ -128,6 +128,11 @@
                     th.innerHTML = col[i];
                     thr.appendChild(th);
                 }
+
+                // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+                var divContainer = document.getElementById(div_id);
+                divContainer.innerHTML = "";
+                divContainer.appendChild(table);
             }
 
             $("#parallelApproval").submit(function(e) {
