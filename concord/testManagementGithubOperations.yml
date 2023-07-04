@@ -121,7 +121,14 @@ flows:
         prDestinationBranch: "main"
       out:
         myPrId: ${prId}
-        myPrStatus: ${prStatusesUrl}
+
+    - task: github
+      in:
+        action: "getPR"
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${projectName}
+        prNumber: ${myPrId}
 
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat("/pull/").concat(myPrId)}
       out: pullRequestUrl
