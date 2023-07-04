@@ -81,6 +81,8 @@
         </form>
         <script type="text/javascript">
 
+            var tableCreated = false;
+
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
             }
@@ -99,15 +101,16 @@
                 document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
 
                 div_id = "showPullRequestDetails";
-                createTableFromJSON(data.values.pullRequestsDetails, div_id)
-
                 setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 300000);
+
+                createTableFromJSON(data.values.pullRequestsDetails, div_id)
             }
 
             function reloadPullRequestStatus(data, div_id) {
-                var table = document.getElementById("pullRequest")
-
-                console.log('Beginning reload process for Pull Request Data');
+                if ( tableCreated ) {
+                    var table = document.getElementById("pullRequest")
+                    console.log('Beginning reload process for Pull Request Data');
+                }
             }
 
             function createTableFromJSON(data, div_id) {
@@ -150,6 +153,8 @@
                 var divContainer = document.getElementById(div_id);
                 divContainer.innerHTML = "";
                 divContainer.appendChild(table);
+
+                tableCreated = true;
             }
 
             $("#parallelApproval").submit(function(e) {
