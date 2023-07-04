@@ -11,11 +11,12 @@ flows:
     - form: parallelApproval
       values:
         branch: ${branch}
-        executedBy: ${currentUser.userName}
+        executedBy: "${currentUser.username}"
         libraryName: ${libraryName}
         libraryVersion: ${libraryVersion}
         organization: ${organization}
         processId: ${txId}
+        pullRequestsDetails: ${pullRequests}
     - checkpoint: "Initiate_${branch}_Cleanup"
     - call: cleanup-repositories
       withItems: ${productRepositories}

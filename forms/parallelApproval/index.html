@@ -64,6 +64,18 @@
                 </div>
             </div>
             <br/>
+            <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div class="ui padded grid">
+                    <div class="ui hidden section divider"></div>
+                    <div class="row">
+                        <h1 class="ui huge dividing header">In Memory Testing Status</h1>
+                    </div>
+                    <div id="showPullRequestDetails" class="row">
+
+                    </div>
+                </div>
+            </div>
+            <br/>
             <button id="customFormSubmitButton" class="ui primary button" type="submit">Approve</button>
             <button class="ui button" type="button" onclick="redirectToProcessPage()">Back to Process Page</button>
         </form>
@@ -85,6 +97,37 @@
                 document.getElementById("onlyDeployVersion").innerHTML=`${data.values.libraryVersion}`;
                 document.getElementById("onlyDeployOrg").innerHTML=`${data.values.organization}`;
                 document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
+
+                div_id = "showPullRequestDetails";
+                createTableFromJSON(${data.values.pullRequestsDetails}, div_id)
+            }
+
+            function createTableFromJSON(data, div_id) {
+                var col = [];
+                for (var i = 0; i < jData.length; i++) {
+                    for (var key in jData[i]) {
+                        if (col.indexOf(key) === -1) {
+                            col.push(key);
+                        }
+                    }
+                }
+
+                // CREATE DYNAMIC TABLE
+                var table = document.createElement("table");
+                table.id = "pullRequests";
+                table.className = "ui single line striped selectable unstackable table";
+
+                var thead = table.appendChild(document.createElement("thead"));
+                var tbody = table.appendChild(document.createElement("tbody"));
+
+                var thr = thead.insertRow(-1);
+
+                for (var i = 0; i < col.length; i++) {
+                    var th = document.createElement("th"); // TABLE HEADER.
+                    th.className = "collapsing";
+                    th.innerHTML = col[i];
+                    thr.appendChild(th);
+                }
             }
 
             $("#parallelApproval").submit(function(e) {
