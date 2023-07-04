@@ -104,8 +104,8 @@
 
             function createTableFromJSON(data, div_id) {
                 var col = [];
-                for (var i = 0; i < jData.length; i++) {
-                    for (var key in jData[i]) {
+                for (var i = 0; i < data.length; i++) {
+                    for (var key in data[i]) {
                         if (col.indexOf(key) === -1) {
                             col.push(key);
                         }
