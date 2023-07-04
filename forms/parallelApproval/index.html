@@ -80,6 +80,11 @@
             <button class="ui button" type="button" onclick="redirectToProcessPage()">Back to Process Page</button>
         </form>
         <script type="text/javascript">
+
+            const octokit = new Octokit({
+                auth: 'YOUR-TOKEN'
+            })
+
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
             }
