@@ -80,8 +80,6 @@
             <button class="ui button" type="button" onclick="redirectToProcessPage()">Back to Process Page</button>
         </form>
         <script type="text/javascript">
-            var timer;
-
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
             }
@@ -101,10 +99,6 @@
 
                 div_id = "showPullRequestDetails";
                 createTableFromJSON(data.values.pullRequestsDetails, div_id)
-
-                timer = setInterval(function() {
-                    console.log("Executing Table Refresh")
-                }, 5000);
             }
 
             function createTableFromJSON(data, div_id) {
@@ -154,7 +148,6 @@
                 var button = document.getElementById("customFormSubmitButton");
                 $('input[name="action"]:hidden').val(true);
                 button.classList.add("loading");
-                clearInterval(timer);
 
                 $.ajax({
                     type: "POST",
