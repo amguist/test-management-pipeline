@@ -5,7 +5,6 @@
         <script src="data.js"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@octokit/core@4.2.4/dist-node/index.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css" />
         <link rel="stylesheet" href="../shared/common.css" />
     </head>
@@ -80,13 +79,7 @@
             <button id="customFormSubmitButton" class="ui primary button" type="submit">Approve</button>
             <button class="ui button" type="button" onclick="redirectToProcessPage()">Back to Process Page</button>
         </form>
-        <script type="module">
-            import { Octokit } from "https://esm.sh/@octokit/core";
-        </script>
         <script type="text/javascript">
-
-            // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
-            const octokit = new Octokit({ auth: `personal-access-token123` });
 
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
@@ -107,6 +100,14 @@
 
                 div_id = "showPullRequestDetails";
                 createTableFromJSON(data.values.pullRequestsDetails, div_id)
+
+                setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 300000);
+            }
+
+            function reloadPullRequestStatus(data, div_id) {
+                var table = document.getElementById("pullRequest")
+
+                console.log('Beginning reload process for Pull Request Data');
             }
 
             function createTableFromJSON(data, div_id) {
