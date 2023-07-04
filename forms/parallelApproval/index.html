@@ -80,11 +80,13 @@
             <button id="customFormSubmitButton" class="ui primary button" type="submit">Approve</button>
             <button class="ui button" type="button" onclick="redirectToProcessPage()">Back to Process Page</button>
         </form>
+        <script type="module">
+            import { Octokit } from "https://esm.sh/@octokit/core";
+        </script>
         <script type="text/javascript">
 
-            const octokit = new Octokit({
-                auth: 'YOUR-TOKEN'
-            })
+            // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
+            const octokit = new Octokit({ auth: `personal-access-token123` });
 
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
