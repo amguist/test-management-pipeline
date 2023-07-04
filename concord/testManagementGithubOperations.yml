@@ -136,6 +136,9 @@ flows:
         pullRequestDetails:
           projectName: ${projectName}
           prNumber: ${myPrId}
-          pullRequestUrl: ${pullRequestUrl}
-          testStatus: ${myPrStatus}
+          pullRequestUrl: ${pr.html_url}
+          testStatus: ${pr.status_url}
+          state: ${pr.mergeable_state}
+          mergeable: ${pr.mergeable}
+
     - ${pullRequests.add(pullRequestDetails)}
