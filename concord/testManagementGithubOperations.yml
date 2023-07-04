@@ -130,8 +130,6 @@ flows:
         repo: ${projectName}
         prNumber: ${myPrId}
 
-    - log: "Important values from PR: ${pr.mergeable}, ${pr.state}"
-
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat("/pull/").concat(myPrId)}
       out: pullRequestUrl
     - set:
@@ -139,7 +137,7 @@ flows:
           projectName: ${projectName}
           prNumber: ${myPrId}
           state: "${pr.state}"
-          pullRequestUrl: "${pr.htmlUrl}"
           mergeable: "${pr.mergeable}"
+          pullRequestUrl: "${pr.htmlUrl}"
 
     - ${pullRequests.add(pullRequestDetails)}
