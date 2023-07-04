@@ -121,6 +121,7 @@ flows:
         prDestinationBranch: "main"
       out:
         myPrId: ${prId}
+        myPrStatus: ${prStatusesUrl}
 
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat("/pull/").concat(myPrId)}
       out: pullRequestUrl
@@ -129,5 +130,5 @@ flows:
           projectName: ${projectName}
           prNumber: ${myPrId}
           pullRequestUrl: ${pullRequestUrl}
-          testStatus: ""
+          testStatus: ${myPrStatus}
     - ${pullRequests.add(pullRequestDetails)}
