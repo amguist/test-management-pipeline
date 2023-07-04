@@ -154,6 +154,7 @@
                 var button = document.getElementById("customFormSubmitButton");
                 $('input[name="action"]:hidden').val(true);
                 button.classList.add("loading");
+                clearInterval(timer);
 
                 $.ajax({
                     type: "POST",
