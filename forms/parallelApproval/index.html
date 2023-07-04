@@ -99,7 +99,7 @@
                 document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
 
                 div_id = "showPullRequestDetails";
-                createTableFromJSON(${data.values.pullRequestsDetails}, div_id)
+                createTableFromJSON(data.values.pullRequestsDetails, div_id)
             }
 
             function createTableFromJSON(data, div_id) {
@@ -119,7 +119,6 @@
 
                 var thead = table.appendChild(document.createElement("thead"));
                 var tbody = table.appendChild(document.createElement("tbody"));
-
                 var thr = thead.insertRow(-1);
 
                 for (var i = 0; i < col.length; i++) {
