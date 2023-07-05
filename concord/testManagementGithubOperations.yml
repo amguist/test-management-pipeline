@@ -158,4 +158,5 @@ flows:
       out:
         myPrId: ${prId}
     - call: addPullRequestDetails
-      in: ${myPrId}
+      in:
+        number: ${myPrId}
