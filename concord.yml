@@ -14,7 +14,7 @@ configuration:
     libraryName: "common-library"
     libraryVersion: "0.0.1-SNAPSHOT"
     organization: "amguist"
-    productRepositories: [ "test-product" ]
+    productRepositories: [ { product: "test-product", email: "rhon.guist@gmail.com" } ]
     repo: ""
     version: ""
 

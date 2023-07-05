@@ -24,12 +24,14 @@ flows:
   cleanup-repositories:
     - call: performCleanupOperations
       in:
-        projectName: ${item}
+        projectName: ${item.product}
+        projectEmail: ${item.email}
 
   manage-repositories:
     - call: verifyGithubBranch
       in:
-        projectName: ${item}
+        projectName: ${item.product}
+        projectEmail: ${item.email}
 
   verifyGithubBranch:
     - call: performGithubOperations
@@ -39,3 +41,4 @@ flows:
         responseFieldName: branchList
         entityId: ${branch}
         projectName: ${projectName}
+        projectEmail: ${projectEmail}
