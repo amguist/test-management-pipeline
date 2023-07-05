@@ -74,7 +74,7 @@ flows:
             repo: ${projectName}
             base: ${branch}
             state: "open"
-        - if: ${prList.isEmpty}
+        - if: ${prList.isEmpty()}
           then:
             - log: "No Open PRs to pull details for ..."
           else:
