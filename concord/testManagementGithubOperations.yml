@@ -81,7 +81,7 @@ flows:
             - expr: ${prList.stream().map(c -> c.get('number')).toList()}
               out: retrievedPullRequests
             - call: addPullRequestDetails
-              withItems: retrievedPullRequests
+              withItems: ${retrievedPullRequests}
       else:
         - log: "Error occurred while cloning necessary branch ...."
 
