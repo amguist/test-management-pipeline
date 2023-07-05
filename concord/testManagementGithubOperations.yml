@@ -97,7 +97,7 @@ flows:
     - set:
         pullRequestDetails:
           projectName: ${projectName}
-          prNumber: ${myPrId}
+          prNumber: ${item}
           state: "${pr.state}"
           mergeable: "${pr.mergeable}"
           pullRequestUrl: "${pr.htmlUrl}"
