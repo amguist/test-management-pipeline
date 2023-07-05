@@ -157,6 +157,20 @@ flows:
         prDestinationBranch: "main"
       out:
         myPrId: ${prId}
-    - call: addPullRequestDetails
+
+    - task: github
       in:
-        number: ${myPrId}
+        action: "getPR"
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${projectName}
+        prNumber: ${myPrId}
+
+    - set:
+        pullRequestDetails:
+          projectName: ${projectName}
+          prNumber: ${myPrId}
+          state: "${pr.state}"
+          mergeable: "${pr.mergeable}"
+          pullRequestUrl: "${pr.htmlUrl}"
+    - ${pullRequests.add(pullRequestDetails)}
