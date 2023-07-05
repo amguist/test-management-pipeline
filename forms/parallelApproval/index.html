@@ -103,10 +103,10 @@
                 div_id = "showPullRequestDetails";
                 createTableFromJSON(data.values.pullRequestsDetails, div_id)
 
-                setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 1000)
+                setInterval(reloadPullRequestStatus, 1000)
             }
 
-            function reloadPullRequestStatus(data, div_id) {
+            function reloadPullRequestStatus() {
                 if (tableCreated) {
                     var table = document.getElementById("pullRequest")
                     console.log('Beginning reload process for Pull Request Data');
