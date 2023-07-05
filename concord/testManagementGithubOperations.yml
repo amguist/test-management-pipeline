@@ -65,8 +65,44 @@ flows:
             filePath: "${workDir}/${projectName}"
         - call: patch-repo-pom-xml
         - call: gitCommitBranch
+
+        - task: github
+          in:
+            action: getPRList
+            accessToken: ${githubToken}
+            org: ${organization}
+            repo: ${projectName}
+            base: ${branch}
+            state: "open"
+        - if: ${prList.isEmpty}
+          then:
+            - log: "No Open PRs to pull details for ..."
+          else:
+            - expr: ${prList.stream().map(c -> c.get('number')).toList()}
+              out: retrievedPullRequests
+            - call: addPullRequestDetails
+              withItems: retrievedPullRequests
       else:
         - log: "Error occurred while cloning necessary branch ...."
+
+  addPullRequestDetails:
+    - task: github
+      in:
+        action: "getPR"
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${projectName}
+        prNumber: ${item}
+
+    - set:
+        pullRequestDetails:
+          projectName: ${projectName}
+          prNumber: ${myPrId}
+          state: "${pr.state}"
+          mergeable: "${pr.mergeable}"
+          pullRequestUrl: "${pr.htmlUrl}"
+    - ${pullRequests.add(pullRequestDetails)}
+
 
   gitCreateBranch:
     - task: git
@@ -121,23 +157,5 @@ flows:
         prDestinationBranch: "main"
       out:
         myPrId: ${prId}
-
-    - task: github
-      in:
-        action: "getPR"
-        accessToken: ${githubToken}
-        org: ${organization}
-        repo: ${projectName}
-        prNumber: ${myPrId}
-
-    - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat("/pull/").concat(myPrId)}
-      out: pullRequestUrl
-    - set:
-        pullRequestDetails:
-          projectName: ${projectName}
-          prNumber: ${myPrId}
-          state: "${pr.state}"
-          mergeable: "${pr.mergeable}"
-          pullRequestUrl: "${pr.htmlUrl}"
-
-    - ${pullRequests.add(pullRequestDetails)}
+    - call: addPullRequestDetails
+      in: ${myPrId}
