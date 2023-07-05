@@ -101,13 +101,13 @@
                 document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
 
                 div_id = "showPullRequestDetails";
-                setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 300000);
-
                 createTableFromJSON(data.values.pullRequestsDetails, div_id)
+
+                setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 30000)
             }
 
             function reloadPullRequestStatus(data, div_id) {
-                if ( tableCreated ) {
+                if (tableCreated) {
                     var table = document.getElementById("pullRequest")
                     console.log('Beginning reload process for Pull Request Data');
                 }
