@@ -104,7 +104,6 @@ flows:
           state: "${pr.state}"
           mergeable: "${pr.mergeable}"
           pullRequestUrl: "${pr.htmlUrl}"
-          projectEmail: ${projectEmail}
     - ${pullRequests.add(pullRequestDetails)}
 
 
@@ -177,5 +176,4 @@ flows:
           state: "${pr.state}"
           mergeable: "${pr.mergeable}"
           pullRequestUrl: "${pr.htmlUrl}"
-          projectEmail: ${projectEmail}
     - ${pullRequests.add(pullRequestDetails)}
