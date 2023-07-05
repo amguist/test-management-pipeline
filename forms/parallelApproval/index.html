@@ -103,7 +103,7 @@
                 div_id = "showPullRequestDetails";
                 createTableFromJSON(data.values.pullRequestsDetails, div_id)
 
-                setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 30000)
+                setInterval(reloadPullRequestStatus(data.values.pullRequestDetails, div_id), 1000)
             }
 
             function reloadPullRequestStatus(data, div_id) {
