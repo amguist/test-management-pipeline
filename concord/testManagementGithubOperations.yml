@@ -78,6 +78,7 @@ flows:
           then:
             - log: "No Open PRs to pull details for ..."
           else:
+            - log: "Contents Of PR List: ${prList}"
             - expr: ${prList.stream().map(c -> c.get('number')).toList()}
               out: retrievedPullRequests
             - call: addPullRequestDetails
