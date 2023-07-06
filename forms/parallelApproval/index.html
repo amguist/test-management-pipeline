@@ -117,7 +117,7 @@
             }
 
             function activateSubmitButton() {
-                data.forEach((obj, i) => {
+                data.pullRequestsDetails.forEach((obj, i) => {
                     console.log("Mergeable", obj.mergeable);
                     if ( obj.mergeable ) {
                         activateSubmit = true;
@@ -125,7 +125,6 @@
                         activateSubmit = false;
                     }
                 });
-
                 console.log("Activate Submit Button: ", activateSubmit);
             }
 
