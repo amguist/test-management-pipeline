@@ -82,6 +82,7 @@
         <script type="text/javascript">
 
             var tableCreated = false;
+            var activateSubmit = false;
 
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
@@ -109,7 +110,23 @@
                 if (tableCreated) {
                     var table = document.getElementById("pullRequest")
                     console.log('Beginning reload process for Pull Request Data');
+
+
+                    activateSubmitButton();
                 }
+            }
+
+            function activateSubmitButton() {
+                data.forEach((obj, i) => {
+                    console.log("Mergeable", obj.mergeable);
+                    if ( obj.mergeable ) {
+                        activateSubmit = true;
+                    } else {
+                        activateSubmit = false;
+                    }
+                });
+
+                console.log("Activate Submit Button: ", activateSubmit);
             }
 
             function createTableFromJSON(data, div_id) {
