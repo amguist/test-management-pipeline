@@ -116,12 +116,13 @@
             }
 
             function activateSubmitButton() {
+                var failureExists = false;
                 data.values.pullRequestsDetails.forEach((obj, i) => {
-                    if ( obj.mergeable ) {
+                    if ( obj.mergeable && !failureExists ) {
                         activateSubmit = true;
                     } else {
+                        failureExists = true;
                         activateSubmit = false;
-                        break;
                     }
                 });
 
