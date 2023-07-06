@@ -97,8 +97,6 @@ flows:
         repo: ${projectName}
         prNumber: ${item}
 
-    - log: "Get Pull Request Details: ${pr}"
-
     - set:
         pullRequestDetails:
           projectName: ${projectName}
@@ -106,6 +104,7 @@ flows:
           state: "${pr.state}"
           mergeable: "${pr.mergeable}"
           pullRequestUrl: "${pr.htmlUrl}"
+          pullRequestApiUrl: "${pr.url}"
     - ${pullRequests.add(pullRequestDetails)}
 
 
@@ -178,4 +177,5 @@ flows:
           state: "${pr.state}"
           mergeable: "${pr.mergeable}"
           pullRequestUrl: "${pr.htmlUrl}"
+          pullRequestApiUrl: "${pr.url}"
     - ${pullRequests.add(pullRequestDetails)}

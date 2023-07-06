@@ -108,12 +108,19 @@
 
             function reloadPullRequestStatus() {
                 if (tableCreated) {
+
                     var table = document.getElementById("pullRequest")
 
 
                     if ( !activateSubmit ) {
                         activateSubmitButton();
                     }
+                }
+            }
+
+            function updateTableDataUsingGithub() {
+                data.values.pullRequestsDetails.forEach((obj, i) => {
+
                 }
             }
 
