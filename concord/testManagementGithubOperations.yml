@@ -97,6 +97,8 @@ flows:
         repo: ${projectName}
         prNumber: ${item}
 
+    - log: "Get Pull Request Details: ${pr}"
+
     - set:
         pullRequestDetails:
           projectName: ${projectName}

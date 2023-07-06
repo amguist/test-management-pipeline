@@ -109,9 +109,11 @@
             function reloadPullRequestStatus() {
                 if (tableCreated) {
                     var table = document.getElementById("pullRequest")
-                    console.log('Beginning reload process for Pull Request Data');
 
-                    activateSubmitButton();
+
+                    if ( !activateSubmit ) {
+                        activateSubmitButton();
+                    }
                 }
             }
 
