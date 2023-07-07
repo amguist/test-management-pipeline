@@ -79,7 +79,7 @@ flows:
             - log: "No Open PRs to pull details for ..."
           else:
             - log: "Contents Of PR List: ${prList}"
-            - expr: ${prList.stream().filter(c -> !branch.equals(c.head.ref)).map(c -> c.get('number')).toList()}
+            - expr: ${prList.stream().map(c -> c.get('number')).toList()}
               out: retrievedPullRequests
 
             - log: "Contents of the pull request retrieve: ${retrievedPullRequests}"
