@@ -165,6 +165,8 @@ flows:
           >
           > ## Test Notes
           > Please provide test notes if applicable
+          > Testing is being based on executing the standard PR flow, which executes IMA tests which are 
+          > created by the initiative team.  
           >
           > ## PR Checklist
           > Before requesting review for this PR make sure that:
