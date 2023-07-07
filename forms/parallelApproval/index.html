@@ -95,6 +95,17 @@
                 initializeFormElements();
             });
 
+            function sendEmail(data, contactList, mailCb) {
+                sendMail({
+                    from: '"PlatformAdmin" <no-reply@walmart.com>',
+                    to: contactList,
+                    subject: '' + data.subject,
+                    html: '' + data.bodyData
+                }, function (err, reply) {
+                    mailCb(err,reply)
+                })
+            }
+
             function initializeFormElements() {
                 // Set Values On Form Based On What's Being Supplied By Concord Process
                 document.getElementById("onlyDeployBranch").innerHTML=`${data.values.branch}`;
