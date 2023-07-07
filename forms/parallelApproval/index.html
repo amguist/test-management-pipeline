@@ -83,6 +83,7 @@
 
             var tableCreated = false;
             var activateSubmit = false;
+            var tableData = null;
 
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
@@ -93,17 +94,6 @@
                 initializeFormElements();
             });
 
-            function sendEmail(data, contactList, mailCb) {
-                sendMail({
-                    from: '"PlatformAdmin" <no-reply@walmart.com>',
-                    to: contactList,
-                    subject: '' + data.subject,
-                    html: '' + data.bodyData
-                }, function (err, reply) {
-                    mailCb(err,reply)
-                })
-            }
-
             function initializeFormElements() {
                 // Set Values On Form Based On What's Being Supplied By Concord Process
                 document.getElementById("onlyDeployBranch").innerHTML=`${data.values.branch}`;
@@ -113,8 +103,9 @@
                 document.getElementById("onlyDeployOrg").innerHTML=`${data.values.organization}`;
                 document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
 
-                div_id = "showPullRequestDetails";
-                createTableFromJSON(data.values.pullRequestsDetails, div_id)
+                // copy the contents of data.values.pullRequestsDetails
+                tableData = data.values.pullRequestsDetails;
+                createTableFromJSON(tableData, "showPullRequestDetails")
             }
 
             function reloadPullRequestStatus() {
