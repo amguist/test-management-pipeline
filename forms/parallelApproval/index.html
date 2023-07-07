@@ -119,8 +119,10 @@
             }
 
             function updateTableDataUsingGithub() {
+                "https://api.github.com/repos/amguist/test-product/pulls/18"
                 data.values.pullRequestsDetails.forEach((obj, i) => {
-                    var url = "https://api.github.com/repos/".concat("test");
+                    var url = "https://api.github.com/repos/".concat(${data.values.organization}).concat("/");
+                    url.concat(${obj.projectName}).concat("/pulls/").concat(${obj.prNumber});
                     console.log("API Url: ", url);
                 });
             }
