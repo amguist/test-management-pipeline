@@ -156,7 +156,25 @@ flows:
         org: ${organization}
         repo: ${projectName}
         prTitle: "[${branch}-IMA-Test]"
-        prBody: ""
+        prBody: |
+          > ## PR Description - What and Why?
+          > Please provide more detailed information for the PR where possible:
+          > Pull request is a systemic build that is initiated for the building of ${libraryName} based on 
+          > version: ${libraryVersion} of Branch: ${branch}.  Will perform a test against changes made within the
+          > library against all initiatives.
+          >
+          > ## Test Notes
+          > Please provide test notes if applicable
+          >
+          > ## PR Checklist
+          > Before requesting review for this PR make sure that:
+          >
+          > - [X] You have manually tested and verified that it works.
+          > - [X] You have updated all relevant documentation.
+          > - [X] You have resolved all merge conflicts with main.
+          > - [ ] You have added a PRR document, if applicable.
+          > - [X] You are not including to much in a single PR.  Ensure that this PR is focused.
+          > - [X] Name includes Ticket Number
         prSourceBranch: ${branch}
         prDestinationBranch: "main"
       out:
