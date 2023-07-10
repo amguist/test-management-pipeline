@@ -130,7 +130,7 @@
                             scope.someResult = result;
                         }
                     });
-                    console.log("Contents: ", scope);
+                    console.log("Contents: ", scope.someResult);
                 });
             }
 
@@ -142,6 +142,18 @@
             async function fetchPullRequest(url) {
                 fetch(url).then(response => {
                     return response.json();
+                })
+                .then((data) => {
+                    let jsonObj = data;
+                    const pullRequestDetail = {
+                        projectName: obj.projectName,
+                        prNumber: jsonObj.number,
+                        state: jsonObj.state,
+                        mergeable: jsonObj.mergeable,
+                        pullRequestUrl: jsonObj.html_url,
+                        lastUpdate: jsonObj.updated_at
+                    };
+                    return pullRequestDetail;
                 })
             }
 
