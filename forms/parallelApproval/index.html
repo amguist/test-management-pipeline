@@ -125,11 +125,12 @@
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
-                    fetch('https://reqbin.com/echo/get/json', {
+                    fetch(url, {
                         method: 'GET',
                         headers: {
                             'Accept': 'application/vnd.github+json',
                             'X-GitHub-Api-Version': '2022-11-28',
+                            tokenHeader
                         }
                     })
                     .then(response => response.json())
