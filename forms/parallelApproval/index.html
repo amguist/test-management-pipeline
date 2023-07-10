@@ -135,8 +135,10 @@
 
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
+                    var authorizationHeader = "Authorization: Bearer ".concat(data.values.githubToken)
                     $.ajax(url, {
                         type: "GET",
+                        headers: { authorizationHeader },
                         async: false,
                         dataType: "json",
                         success: (resp) => {
