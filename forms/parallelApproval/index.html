@@ -129,7 +129,14 @@
                         })
                         .then((data) => {
                             let jsonObj = data;
+
+                            console.log("Project Name: ", obj.projectName);
                             console.log("Pull Request Number: ", jsonObj.number);
+                            console.log("Pull Request State: ", jsonObj.state);
+                            console.log("Pull Request Mergeable: ", jsonObj.mergeable);
+                            console.log("Pull Request Url: ", jsonObj.htmlUrl);
+                            console.log("Pull Request Updated At: ", jsonObj.updatedAt);
+
                         })
                 });
             }
