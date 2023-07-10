@@ -139,11 +139,13 @@
                             updatedTableData.push(pullRequestDetail);
                         })
                 });
+                console.log("Data Size: ", updatedTableData.length);
                 refreshTable(updatedTableData,"showPullRequestDetails");
             }
 
             function refreshTable(data, div_id) {
 
+                console.log("Data Size: ", data.length);
                 var col = [];
                 for (var i = 0; i < data.length; i++) {
                     for (var key in data[i]) {
