@@ -128,7 +128,6 @@
                 const updatedTableData = [ ];
 
                 const updateTimestamp = Date.now();
-                let formattedDate = updateTimestamp.getFullYear() + "-" + addLeadingZeros(updateTimestamp.getMonth() + 1) + "-" + addLeadingZeros(updateTimestamp.getDate()) + " " + addLeadingZeros(updateTimestamp.getHours()) + ":" + addLeadingZeros(updateTimestamp.getMinutes()) + ":" + addLeadingZeros(updateTimestamp.getSeconds());
 
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
@@ -144,7 +143,7 @@
                                 state: resp.state,
                                 mergeable: resp.mergeable,
                                 pullRequestUrl: resp.html_url,
-                                lastUpdate: formattedDate
+                                lastUpdate: updateTimestamp
                             };
                             updatedTableData.push(pullRequestDetail);
                         }
