@@ -129,10 +129,8 @@
                             'Content-Type': 'application/json'
                         }
                     })
-                    .then(response => response.text());
-                    var pr = JSON.parse(jsonData);
-                    console.log("****************");
-                    console.log("Pull Request Number: ", pr.number)
+                    .then(response => response.json);
+                    console.log("Pull Request: ", jsonData.number);
                 });
             }
 
