@@ -136,6 +136,7 @@
 
             async function getPullRequestDetails(url, details) {
                 const result = await fetchPullRequest(url, details);
+                console.log("Result Value: ", result);
                 return result;
             }
 
@@ -153,7 +154,6 @@
                         pullRequestUrl: jsonObj.html_url,
                         lastUpdate: jsonObj.updated_at
                     };
-                    console.log("Pull Request Details: ", pullRequestDetail);
                     return pullRequestDetail;
                 })
             }
