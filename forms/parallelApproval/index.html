@@ -127,7 +127,7 @@
                         method: 'GET'
                     })
                     .then(response => response.json());
-                    var pr = JSON.parse(jsonData);
+                    var pr = eval(jsonData);
                     console.log("****************");
                     console.log("Pull Request Number: ", pr.number)
                 });
