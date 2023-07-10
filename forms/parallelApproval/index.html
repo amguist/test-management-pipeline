@@ -125,9 +125,6 @@
                     console.log("URL: ", url);
                     fetch(url, {
                         method: 'GET',
-                        headers: {
-                            Authentication: 'Bearer {data.values.githubToken}'
-                        }
                     })
                     .then(response => response.json())
                     .then(data => console.log(JSON.stringify(data)))
