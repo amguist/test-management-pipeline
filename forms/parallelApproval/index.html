@@ -120,42 +120,16 @@
 
             function updateTableDataUsingGithub() {
                 tableData.forEach((obj, i) => {
-                    const scope = {
-                        someResult: null
-                    };
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
-                    getPullRequestDetails(url, obj).then(result => {
-                        if ( scope.someResult === null ) {
-                            scope.someResult = result;
+                    $.ajax(url, {
+                        type: "GET",
+                        false,
+                        success: (resp) => {
+                            console.log("Received Response of: ${resp} based on request");
                         }
                     });
-                    console.log("Contents: ", scope.someResult);
                 });
-            }
-
-            async function getPullRequestDetails(url, details) {
-                const result = await fetchPullRequest(url, details);
-                console.log("Result Value: ", result);
-                return result;
-            }
-
-            async function fetchPullRequest(url, details) {
-                fetch(url).then(response => {
-                    return response.json();
-                })
-                .then((data) => {
-                    let jsonObj = data;
-                    const pullRequestDetail = {
-                        projectName: details.projectName,
-                        prNumber: jsonObj.number,
-                        state: jsonObj.state,
-                        mergeable: jsonObj.mergeable,
-                        pullRequestUrl: jsonObj.html_url,
-                        lastUpdate: jsonObj.updated_at
-                    };
-                    return pullRequestDetail;
-                })
             }
 
             function activateSubmitButton() {
