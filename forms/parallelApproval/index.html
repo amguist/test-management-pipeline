@@ -125,9 +125,12 @@
                     console.log("URL: ", url);
                     var jsonData = fetch(url, {
                         method: 'GET'
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
                     })
-                    .then(response => response.json());
-                    var pr = eval(jsonData);
+                    .then(response => response.text());
+                    var pr = JSON.parse(jsonData);
                     console.log("****************");
                     console.log("Pull Request Number: ", pr.number)
                 });
