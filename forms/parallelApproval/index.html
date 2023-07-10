@@ -83,7 +83,6 @@
             var tableCreated = false;
             var activateSubmit = false;
             var tableData = null;
-            var updatedTableData = null;
 
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
@@ -119,6 +118,7 @@
             }
 
             function updateTableDataUsingGithub() {
+                const updatedTableData = [ ];
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
@@ -127,11 +127,19 @@
                         async: false,
                         dataType: "json",
                         success: (resp) => {
-                            console.log("Received Response of: ", resp.url);
-
+                            const pullRequestDetail = {
+                                projectName: obj.projectName,
+                                prNumber: resp.number,
+                                state: resp.state,
+                                mergeable: resp.mergeable,
+                                pullRequestUrl: resp.html_url,
+                                lastUpdate: resp.updated_at
+                            };
+                            updatedTableData.push(pullRequestDetail);
                         }
                     });
                 });
+                console.log("Updated Table Data: ", updatedTableData);
             }
 
             function activateSubmitButton() {
