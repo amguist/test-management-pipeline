@@ -134,9 +134,17 @@
                             console.log("Pull Request Number: ", jsonObj.number);
                             console.log("Pull Request State: ", jsonObj.state);
                             console.log("Pull Request Mergeable: ", jsonObj.mergeable);
-                            console.log("Pull Request Url: ", jsonObj.htmlUrl);
-                            console.log("Pull Request Updated At: ", jsonObj.updatedAt);
+                            console.log("Pull Request Url: ", jsonObj.html_url);
+                            console.log("Pull Request Updated At: ", jsonObj.updated_at);
 
+                            const pullRequestDetail = {
+                                projectName: obj.projectName,
+                                prNumber: jsonObj.number,
+                                state: jsonObj.state,
+                                mergeable: jsonObj.mergeable",
+                                pullRequestUrl: jsonObj.html_url".
+                                lastUpdate: jsonObj.updated_at
+                            };
                         })
                 });
             }
