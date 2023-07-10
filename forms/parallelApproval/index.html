@@ -129,7 +129,7 @@
 
             function activateSubmitButton() {
                 var failureExists = false;
-                data.values.pullRequestsDetails.forEach((obj, i) => {
+                tableData.forEach((obj, i) => {
                     if ( obj.mergeable && !failureExists ) {
                         activateSubmit = true;
                     } else {
