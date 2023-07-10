@@ -83,13 +83,15 @@
             var tableCreated = false;
             var activateSubmit = false;
             var tableData = null;
+            var refreshInterval = null;
 
             function redirectToProcessPage() {
+                clearInterval(refreshInterval);
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
             }
 
             $(document).ready(function() {
-                setInterval(reloadPullRequestStatus, 60000)
+                refreshInterval = setInterval(reloadPullRequestStatus, 60000)
                 initializeFormElements();
             });
 
@@ -115,13 +117,6 @@
                         activateSubmitButton();
                     }
                 }
-            }
-
-            function addLeadingZeros(n) {
-                if (n <= 9) {
-                    return "0" + n;
-                }
-                return n;
             }
 
             function updateTableDataUsingGithub() {
