@@ -121,7 +121,7 @@
             function updateTableDataUsingGithub() {
                 const updatedTableData = [ ];
                 const tokenHeader = "Authorization: Bearer ".concat(data.values.githubToken);
-                console.log('Totken Header Value: ", tokenHeader);
+                console.log("Totken Header Value: ", tokenHeader);
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
