@@ -122,7 +122,7 @@
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
-                    fetch(url)
+                    const obj = fetch(url)
                         .then(response => {
                             return response.json();
                         })
@@ -136,9 +136,9 @@
                                 pullRequestUrl: jsonObj.html_url,
                                 lastUpdate: jsonObj.updated_at
                             };
-                            updatedTableData.push(pullRequestDetail);
-                            console.log("Contents: ", updatedTableData);
+                            return pullRequestDetail;
                         })
+                    console.log("Contents: ", obj);
                 });
             }
 
