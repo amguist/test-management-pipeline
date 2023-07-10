@@ -117,28 +117,15 @@
                 }
             }
 
-            function updateTableDataUsingGithub() {
+            async function updateTableDataUsingGithub() {
                 const updatedTableData = [ ];
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
-                    const payload = Promise.resolve(fetch(url)
+                    const payload = await fetch(url)
                         .then(response => {
                             return response.json();
                         })
-                        .then((data) => {
-                            let jsonObj = data;
-                            const pullRequestDetail = {
-                                projectName: obj.projectName,
-                                prNumber: jsonObj.number,
-                                state: jsonObj.state,
-                                mergeable: jsonObj.mergeable,
-                                pullRequestUrl: jsonObj.html_url,
-                                lastUpdate: jsonObj.updated_at
-                            };
-                            return pullRequestDetail;
-                        })
-                    );
                     console.log("Data Returned: ", payload);
                 })
             }
