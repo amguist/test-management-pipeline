@@ -119,11 +119,19 @@
             }
 
             function updateTableDataUsingGithub() {
+                const updatedTableData = [ ];
+                const tokenHeader = "Authorization: Bearer ".concat(data.values.githubToken);
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
-                    let response = await fetch(url);
-                    console.log("Response Status: ", response.status);
-                    
+                    fetch('https://reqbin.com/echo/get/json', {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/vnd.github+json',
+                            'X-GitHub-Api-Version': '2022-11-28',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(responseData => console.log(JSON.stringify(responseData)))
                 });
             }
 

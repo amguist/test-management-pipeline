@@ -18,6 +18,7 @@ flows:
         organization: ${organization}
         processId: ${txId}
         pullRequestsDetails: ${pullRequests}
+        githubToken: ${githubToken}
     - checkpoint: "Initiate_${branch}_Cleanup"
     - call: cleanup-repositories
       withItems: ${productRepositories}
