@@ -121,7 +121,9 @@
             function updateTableDataUsingGithub() {
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
-                    console.log("API Url: ", url);
+                    let response = await fetch(url);
+                    console.log("Response Status: ", response.status);
+                    
                 });
             }
 
