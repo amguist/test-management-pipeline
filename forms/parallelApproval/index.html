@@ -124,8 +124,10 @@
                     console.log("URL: ", url);
                     $.ajax(url, {
                         type: "GET",
+                        async: false,
+                        dataType: "json",
                         success: (resp) => {
-                            console.log("Received Response of: ${resp} based on request");
+                            console.log("Received Response of: ", resp);
                         }
                     });
                 });
