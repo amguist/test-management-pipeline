@@ -123,11 +123,13 @@
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
-                    fetch(url, {
+                    var jsonData = fetch(url, {
                         method: 'GET'
                     })
-                    .then(response => response.json())
-                    .then(data => console.log(JSON.stringify(data)))
+                    .then(response => response.json());
+                    var pr = JSON.parse(jsonData);
+                    console.log("****************");
+                    console.log("Pull Request Number: ", pr.number)
                 });
             }
 
