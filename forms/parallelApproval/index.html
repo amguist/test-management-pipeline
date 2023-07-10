@@ -128,7 +128,6 @@
                 const updatedTableData = [ ];
 
                 const updateTimestamp = Date.now();
-
                 tableData.forEach((obj, i) => {
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     $.ajax(url, {
@@ -150,6 +149,7 @@
                     });
                 });
                 createTableFromJSON(updatedTableData,"showPullRequestDetails");
+                tableData = updatedTableData;
             }
 
             function activateSubmitButton() {
