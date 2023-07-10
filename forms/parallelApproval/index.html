@@ -128,9 +128,9 @@
                     getPullRequestDetails(url, obj).then(result => {
                         if ( scope.someResult === null ) {
                             scope.someResult = result;
-                            console.log("We have a result now!", getResult());
                         }
                     });
+                    console.log("Contents: ", scope);
                 });
             }
 
