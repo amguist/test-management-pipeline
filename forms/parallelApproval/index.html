@@ -135,11 +135,11 @@
             }
 
             async function getPullRequestDetails(url, details) {
-                const result = await fetchPullRequest(url);
+                const result = await fetchPullRequest(url, details);
                 return result;
             }
 
-            async function fetchPullRequest(url) {
+            async function fetchPullRequest(url, details) {
                 fetch(url).then(response => {
                     return response.json();
                 })
