@@ -124,7 +124,7 @@
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
                     var jsonData = fetch(url, {
-                        method: 'GET'
+                        method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
                         }
