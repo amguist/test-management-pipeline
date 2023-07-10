@@ -128,9 +128,9 @@
                             return response.json();
                         })
                         .then((data) => {
-                            const obj = JSON.parse(data);
+                            let jsonObj = data;
+                            console.log("Pull Request Number: ", jsonObj.number);
                         })
-                    console.log("Data: ", jsonData);
                 });
             }
 
