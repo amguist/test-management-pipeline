@@ -110,7 +110,6 @@
             function reloadPullRequestStatus() {
                 if (tableCreated) {
                     updateTableDataUsingGithub();
-                    var table = document.getElementById("pullRequest");
 
                     if ( !activateSubmit ) {
                         activateSubmitButton();
@@ -140,7 +139,10 @@
                             updatedTableData.push(pullRequestDetail);
                         })
                 });
-                console.log("Contents: ", updatedTableData);
+
+                var table = document.getElementById("pullRequest");
+                table.clear();
+
             }
 
             function activateSubmitButton() {
