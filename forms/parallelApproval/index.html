@@ -128,7 +128,6 @@
                         })
                         .then((data) => {
                             let jsonObj = data;
-                            console.log("Hello There");
                             const pullRequestDetail = {
                                 projectName: obj.projectName,
                                 prNumber: jsonObj.number,
@@ -138,6 +137,7 @@
                                 lastUpdate: jsonObj.updated_at
                             };
                             updatedTableData.push(pullRequestDetail);
+                            console.log("Contents: ", updatedTableData);
                         })
                 });
             }
