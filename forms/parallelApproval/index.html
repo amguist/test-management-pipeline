@@ -83,6 +83,7 @@
             var tableCreated = false;
             var activateSubmit = false;
             var tableData = null;
+            var updatedTableData = null;
 
             function redirectToProcessPage() {
                 window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
@@ -117,16 +118,30 @@
                 }
             }
 
-            async function updateTableDataUsingGithub() {
-                const updatedTableData = [ ];
+            function updateTableDataUsingGithub() {
                 tableData.forEach((obj, i) => {
+                    const scope = {
+                        someResult: null
+                    };
                     var url = "https://api.github.com/repos/".concat(data.values.organization).concat("/").concat(obj.projectName).concat("/pulls/").concat(obj.prNumber);
                     console.log("URL: ", url);
-                    const payload = await fetch(url)
-                        .then(response => {
-                            return response.json();
-                        })
-                    console.log("Data Returned: ", payload);
+                    getPullRequestDetails(url, obj).then(result => {
+                        if ( scope.someResult === null ) {
+                            scope.someResult = result;
+                            console.log('We have a result now!", getResult());
+                        }
+                    });
+                });
+            }
+
+            async function getPullRequestDetails(url, details) {
+                const result = await fetchPullRequest(url);
+                return result;
+            }
+
+            async function fetchPullRequest(url) {
+                fetch(url).then(response => {
+                    return response.json();
                 })
             }
 
