@@ -10,7 +10,10 @@ flows:
         def libraryVersion = libraryVersion.toString()
         def updateDest = Paths.get("${item.product}/pom.xml")
         
-        pomFileContents.properties.each {  it.'common.revision' = libraryVersion }
+        pomFileContents.properties.each {  it.'hawkeye-mockingbird-common.version' = libraryVersion }
+        pomFileContents.properties.each {  it.'hawkeye-mockingbird-common.modules.version' = libraryVersion }
+        pomFileContents.properties.each {  it.'hawkeye-ronin-common.revision' = libraryVersion }
+        pomFileContents.properties.each {  it.'hawkeye-goldenarcher-common.revision' = libraryVersion }
         
         def results = groovy.xml.XmlUtil.serialize(pomFileContents)
         updateDest.write(results.toString())
