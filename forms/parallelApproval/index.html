@@ -145,7 +145,7 @@
                             const pullRequestDetail = {
                                 projectName: obj.projectName,
                                 prNumber: resp.number,
-                                state: resp.state,
+                                state: resp.mergeable_state,
                                 mergeable: resp.mergeable,
                                 pullRequestUrl: resp.html_url,
                                 lastUpdate: formattedDate

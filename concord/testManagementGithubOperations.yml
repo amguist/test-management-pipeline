@@ -97,6 +97,7 @@ flows:
         repo: ${projectName}
         prNumber: ${item}
 
+    - log: "PR Details: ${pr}"
     - set:
         pullRequestDetails:
           projectName: ${projectName}
@@ -189,7 +190,7 @@ flows:
         org: ${organization}
         repo: ${projectName}
         prNumber: ${myPrId}
-
+    - log: "PR Values: ${pr}"
     - set:
         pullRequestDetails:
           projectName: ${projectName}
