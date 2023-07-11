@@ -161,7 +161,7 @@
             function activateSubmitButton() {
                 var failureExists = false;
                 tableData.forEach((obj, i) => {
-                    if ( obj.mergeable && !failureExists ) {
+                    if ( obj.mergeable && (obj.state != 'blocking') && !failureExists ) {
                         activateSubmit = true;
                     } else {
                         failureExists = true;
