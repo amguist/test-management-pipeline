@@ -13,12 +13,14 @@ configuration:
     githubToken: ""
     libraryName: "common-library"
     libraryVersion: "0.0.1-SNAPSHOT"
-    organization: "amguist"
+    organization: "hawkeye"
     productRepositories: [ { product: "test-product", email: "rhon.guist@gmail.com" } ]
     repo: ""
     version: ""
 
 forms:
+  replaySource:
+    - action: { type: boolean }
   parallelApproval:
     - action: { type: boolean }
 

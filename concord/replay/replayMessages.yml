@@ -1,0 +1,8 @@
+flows:
+  replayMessages:
+    - form: parallelApproval
+      values:
+        executedBy: "${currentUser.username}"
+        organization: ${organization}
+        processId: ${txId}
+    - checkpoint: "Processing Request ..."

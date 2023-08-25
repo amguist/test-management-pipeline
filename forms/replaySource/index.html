@@ -1,2 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>Replay From Source</title>
+        <script src="data.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css" />
+        <link rel="stylesheet" href="../shared/common.css" />
+    </head>
+    <body>
+        <div id="root">
+            <div class="ui centered grid">
+                <div class="sixteen wide column topBar">
+                    <div class="ui centered grid dat-page-header">
+                        <div class="item">
+                            <img id="concordLogo" alt="logo" src="../shared/logo.png" class="ui small image"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form id="replaySource" class="ui form">
+                <input type="hidden" id="action" name="action" value=false>
+                <div class="ui two column stackable grid">
+                    <div class="three column row">
+                        <div class="column">
+                            <label><b>Organization</b></label>
+                            <div id="onlyOrganization" name="onlyOrganization" class="ui segment">
 
-lls
+                            </div>
+                        </div>
+                        <div class="column">
+                            <label><b>Concord Process Identifier</b></label>
+                            <div id="onlyProcessId" name="onlyProcessId" class="ui segment">
+
+                            </div>
+                        </div>
+                        <div class="column">
+                            <label><b>User</b></label>
+                            <div id="onlyTriggeredBy" name="onlyTriggeredBy" class="ui segment">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+
+                function redirectToProcessPage() {
+                    window.location.replace("http://localhost:8001/#/process/" + data.values.processId + "/status");
+                }
+
+                $(document).ready(function() {
+                    initializeFormElements();
+                }
+
+                function initializeFormElements() {
+                    document.getElementById("onlyTriggeredBy").innerHTML=`${data.values.executedBy}`;
+                    document.getElementById("onlyDeployOrg").innerHTML=`${data.values.organization}`;
+                    document.getElementById("onlyDeployProcessId").innerHTML=`${data.values.processId}`;
+                }
+
+                $("#replaySource").submit(function(e) {
+                    e.preventDefault();
+                    var button = document.getElementById("customFormSubmitButton");
+                    $('input[name="action"]:hidden').val(true);
+                    button.classList.add("loading");
+
+                    $.ajax({
+                        type: "POST",
+                        url: data.submitUrl,
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            button.classList.remove("loading");
+                            redirectToProcessPage();
+                        },
+                        error: function(data) {
+                            alert("Error in post - check browser console for details!");
+                            console.log("ERROR: ");
+                            console.log(data);
+                            button.classList.remove("loading");
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>
