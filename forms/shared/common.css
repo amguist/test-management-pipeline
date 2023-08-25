@@ -21,9 +21,10 @@ column {
     margin-bottom: 14px;
 }
 
-
 div {
     text-align: center;
     width: 95%;
     margin: auto;
 }
+
+.ui.table tr td { border-top: 0px !important; }

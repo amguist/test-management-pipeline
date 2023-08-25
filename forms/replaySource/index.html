@@ -50,7 +50,7 @@
                             <h1 class="ui huge dividing header">Replay Message Request</h1>
                         </div>
                         <div class="row">
-                            <table class="ui celled table">
+                            <table class="ui very basic table">
                                 <tbody>
                                     <tr>
                                         <td>
@@ -74,18 +74,26 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="ui toggle checkbox">
-                                                <input type="checkbox" name="inOrder">
-                                                <label>Replay Based On Original Order</label>
-                                            </div>
+                                            <label><b>Message Id/Offset(s)</b></label>
                                         </td>
-                                        <td>
-                                            <label><b>Sink</b></label>
+                                            <td>
+                                            <div class="ui input focus">
+                                                <input id="messageIds" type="text" placeholder="Message Id/Offset(s)">
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        <div class="ui toggle checkbox">
+                                            <label>Use Original Message Ordering</label>
+                                            <input type="checkbox" name="inOrder">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
