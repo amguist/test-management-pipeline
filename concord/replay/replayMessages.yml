@@ -1,6 +1,6 @@
 flows:
   replayMessages:
-    - form: parallelApproval
+    - form: replaySource
       values:
         executedBy: "${currentUser.username}"
         organization: ${organization}
