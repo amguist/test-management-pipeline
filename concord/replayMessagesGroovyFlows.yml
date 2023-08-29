@@ -3,5 +3,8 @@ flows:
    - log: "Preparing to perform a request to Source: ${replaySource.sourceUrl} for reprocessing messages ..."
    - script: groovy
      body: |
-        def splitDefinition = replaySource.sourceUrl.split('/')
-        println('Size of splitDefinition ' + splitDefinition.size())
+        import java.nio.file.*
+        import groovy.xml.*
+       
+        def splitDefinition = replaySource.sourceUrl.split('/');
+        println('Size of splitDefinition ' + splitDefinition.size());
