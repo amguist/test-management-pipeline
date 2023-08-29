@@ -1,6 +1,6 @@
 flows:
  get-source-message:
-   - log: "Preparing to perform a request to Source: ${} for reprocessing messages ..."
+   - log: "Preparing to perform a request to Source: ${replaySource.sourceUrl} for reprocessing messages ..."
    - script: groovy
      body: |
         def splitDefinition = replaySource.sourceUrl.split('/')
