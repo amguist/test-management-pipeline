@@ -20,7 +20,6 @@
                 </div>
             </div>
             <form id="replaySource" class="ui form">
-                <input type="hidden" id="action" name="action" value=false>
                 <div class="ui two column stackable grid">
                     <div class="three column row">
                         <div class="column">
@@ -126,7 +125,6 @@
                 $("#replaySource").submit(function(e) {
                     e.preventDefault();
                     var button = document.getElementById("customFormSubmitButton");
-                    $('input[name="action"]:hidden').val(true);
                     button.classList.add("loading");
 
                     $.ajax({
