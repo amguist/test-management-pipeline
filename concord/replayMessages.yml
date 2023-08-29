@@ -6,4 +6,9 @@ flows:
         organization: ${organization}
         processId: ${txId}
     - checkpoint: "Processing Request ..."
+    - expr: ${replaySource.messageIds.stream().flatMap(str -> str.split(",").stream()).toList()}
+      out: messageIdentifiers
     - log: "Hawkeye-Concord | Source URL: ${replaySource.sourceUrl}"
+    - log: "Hawkeye-Concord | Sink URL: ${replaySource:sinkUrl}"
+    - log: "Hawkeye-Concord | Message Identifiers: ${messageIdentifiers}"
+
