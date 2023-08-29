@@ -3,4 +3,19 @@ flows:
    - log: "Preparing to perform a request to Source: ${replaySource.sourceUrl} for reprocessing messages ..."
    - script: groovy
      body: |
-        println('Hello Everyone .... ');
+       def splitSource = replaySource.sourceUrl.split('://')
+       def schema = splitSource[0]
+
+       def topic = splitSource[1].split('/')[1]
+
+       switch(schema) {
+           case 'kafka':
+               println('Schema is of type Kafka ...')
+               break;
+           case 'cosmosdb':
+               println('Schema is of type Cosmos DB ....')
+               break;
+           default:
+               println('Schema ' + schema + ' is not supported .....' )
+               break;
+       }
