@@ -20,6 +20,7 @@
                 </div>
             </div>
             <form id="replaySource" class="ui form">
+                <input type="hidden" id="sourceUrl" name="sourceUrl" value="Testing here....">
                 <div class="ui two column stackable grid">
                     <div class="three column row">
                         <div class="column">
@@ -43,59 +44,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
-                    <div class="ui padded grid">
-                        <div class="row">
-                            <h1 class="ui huge dividing header">Replay Message Request</h1>
-                        </div>
-                        <div class="row">
-                            <table class="ui very basic table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <label><b>Source</b></label>
-                                        </td>
-                                        <td>
-                                            <div class="ui input focus">
-                                                <input id="sourceUrl" type="text" placeholder="Source Url">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label><b>Sink</b></label>
-                                        </td>
-                                        <td>
-                                            <div class="ui input focus">
-                                                <input id="sinkUrl" type="text" placeholder="Sink Url">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label><b>Message Id/Offset(s)</b></label>
-                                        </td>
-                                            <td>
-                                            <div class="ui input focus">
-                                                <input id="messageIds" type="text" placeholder="Message Id/Offset(s)">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table align="center">
-                                <tr>
-                                    <td>
-                                        <div class="ui toggle checkbox">
-                                            <input type="checkbox" name="inOrder">
-                                            <label>Use Original Message Ordering</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
                 <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="buttons">
                     <div class="row">
                         <h1 class="ui huge dividing header"></h1>
