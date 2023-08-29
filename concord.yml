@@ -23,7 +23,6 @@ forms:
     - sourceUrl: { type: "string" }
     - sinkUrl: { type: "string" }
     - messageIds: { type: "string*" }
-    - inOrder: { type: boolean }
   parallelApproval:
     - action: { type: boolean }
 
