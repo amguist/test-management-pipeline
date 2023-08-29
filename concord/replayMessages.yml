@@ -6,4 +6,4 @@ flows:
         organization: ${organization}
         processId: ${txId}
     - checkpoint: "Processing Request ..."
-    - log: "Hawkeye-Concord | Source URL: ${sourceUrl}"
+    - log: "Hawkeye-Concord | Source URL: ${replaySource.sourceUrl}"
