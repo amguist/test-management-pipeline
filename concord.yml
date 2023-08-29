@@ -20,6 +20,10 @@ configuration:
 
 forms:
   replaySource:
+    - sourceUrl: { type: "string" }
+    - sinkUrl: { type: "string" }
+    - messageIds: { type: "string*" }
+    - inOrder: { type: boolean }
     - action: { type: boolean }
   parallelApproval:
     - action: { type: boolean }
