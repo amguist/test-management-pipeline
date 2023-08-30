@@ -3,16 +3,12 @@ flows:
     - log: "Preparing to perform a request to Source: ${replaySource.sourceUrl} for reprocessing messages ..."
     - script: groovy
       body: |
-        
-        @Grab('org.apache.kafka:kafka-clients:2.8.1')
         import org.apache.kafka.clients.consumer.KafkaConsumer
         
         def splitSource = replaySource.sourceUrl.split('://')
         def schema = splitSource[0]
   
-        def topicDefinition = splitSource[1].split('/')[1]
-        def topic = topicDefinition.split('?')[0]
-        def consumerGroup = topicDefinition.split('?')[1]
+        def topic = splitSource[1].split('/')[1]
   
         switch(schema) {
           case 'kafka':
@@ -28,5 +24,5 @@ flows:
         
         
         def replayMessagesFromKafka(topic, consumerGroup) { 
-          println('Retrieving message(s) from topic: ' + topic + ' with consumer group of ' + consumerGroup)
+          println('Retrieving message(s) from topic: ' + topic)
         }
