@@ -3,6 +3,8 @@ flows:
     - log: "Preparing to perform a request to Source: ${replaySource.sourceUrl} for reprocessing messages ..."
     - script: groovy
       body: |
+        import org.apache.kafka.clients.consumer.KafkaConsumer
+        
         def splitSource = replaySource.sourceUrl.split('://')
         def schema = splitSource[0]
   
