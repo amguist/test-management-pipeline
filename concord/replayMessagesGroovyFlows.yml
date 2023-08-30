@@ -10,7 +10,9 @@ flows:
         def splitSource = replaySource.sourceUrl.split('://')
         def schema = splitSource[0]
   
-        def topic = splitSource[1].split('/')[1]
+        def topicDefinition = splitSource[1].split('/')[1]
+        def topic = topicDefinition.split('?')[0]
+        def consumerGroup = topicDefinition.split('?')[1]
   
         switch(schema) {
           case 'kafka':
@@ -25,6 +27,6 @@ flows:
         }
         
         
-        def replayMessagesFromKafka(topic) { 
-          println('Retrieving message(s) from topic: ' + topic)
+        def replayMessagesFromKafka(topic, consumerGroup) { 
+          println('Retrieving message(s) from topic: ' + topic + ' with consumer group of ' + consumerGroup)
         }
