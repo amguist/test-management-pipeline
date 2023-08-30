@@ -10,7 +10,7 @@ flows:
   
         switch(schema) {
           case 'kafka':
-            println('Schema is of type Kafka ...')
+            replayMessagesFromKafka(topic)
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -18,4 +18,9 @@ flows:
           default:
             println('Schema ' + schema + ' is not supported .....' )
             break;
+        }
+        
+        
+        def replayMessagesFromKafka(topic) { 
+          println('Retrieving message(s) from topic: ' + topic)
         }
