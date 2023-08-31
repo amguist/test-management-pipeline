@@ -29,7 +29,7 @@ flows:
             def consumer = createKafkaConsumer(host, consumerGroup)
             def totalMessagesInTopic = getTotalMessagesForTopic(consumer, topic)
         
-            println "Total Number Of Messages is: $totalMessagesInTopic"
+            consumer.close
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -71,6 +71,20 @@ flows:
             return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
-        def replayMessagesFromKafka(host, topic, consumerGroup) { 
+        def replayMessagesFromKafka(topic, numberOfMessages) { 
+            def numberOfMessagesRead = 0
+            def keepOnReading = true
             
+            consumer.subscribe([topic])
+            while(keepOnReading) {
+              ConsumerRecords records = consumer.poll(100)
+              records.each { record ->
+                numberOfMessagesReadSoFar += 1
+                println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
+                if (numberOfMessagesReadSoFar >= numberOfMessagesToRead) {
+                    keepOnReading = false;
+                    break; 
+                }
+              }
+            }
         }
