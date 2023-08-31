@@ -61,10 +61,6 @@ flows:
       
                   println "Consumed record with headers ${record.headers()}"
                 }
-                
-                if (records.size() < 1) {
-                   break;
-                }
               }
             }
             consumer.close()
