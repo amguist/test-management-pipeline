@@ -27,9 +27,9 @@ flows:
         
         
         def replayMessagesFromKafka(host, topic, consumerGroup) { 
-          println('Retrieving message(s) from topic: ' + topic)
+            println('Retrieving message(s) from topic: ' + topic)
         
-          def consumer = new KafkaConsumer([
+            def consumer = new KafkaConsumer([
               "bootstrap.servers"      : host,
               // Consumer group
               "group.id"               : consumerGroup,
@@ -42,12 +42,13 @@ flows:
               // serializers
               "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
               "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
-          ])
+            ])
         
-          // Consume from the supplied topic
-          consumer.subscribe([topic])
-          ConsumerRecords records = consumer.poll(100)
-          records.each { deadletter ->
-            println "deadletter.value()\n"
-         }
+            // Consume from the supplied topic
+            consumer.subscribe([topic])
+            ConsumerRecords records = consumer.poll(100)
+            records.each { deadletter ->
+              println "deadletter.value()\n"
+          }
+          consumer.close()
         }
