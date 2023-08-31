@@ -80,6 +80,8 @@ flows:
             def partitionToReadFrom = new TopicPartition(topic, 0)
             consumer.assign(List.of(partitionToReadFrom));
             consumer.seek(partitionToReadFrom,offsetToReadFrom)
+        
+            def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
             
             while(keepOnReading) {
               if ( numberOfMessages == 0 ) {
@@ -89,7 +91,10 @@ flows:
                 def records = consumer.poll(Duration.ofMillis(100))
                 records.each { record ->
                   numberOfMessagesReadSoFar += 1
-                  println ' Checking to see if message matches filter criteria ... '
+                  println "Record : ${record}\n"
+                  
+                  
+                   
                   if (numberOfMessagesReadSoFar >= numberOfMessages) {
                       keepOnReading = false;
                   }
