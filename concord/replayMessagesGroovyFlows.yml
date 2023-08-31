@@ -41,7 +41,7 @@ flows:
               "auto.offset.reset"      : "earliest",
         
               // auto offset management
-              "enable.auto.commit"     : "false",
+              "enable.auto.commit"     : "true",
               "auto.commit.interval.ms": "1000",
 
               // serializers
