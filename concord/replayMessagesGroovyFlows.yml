@@ -42,7 +42,6 @@ flows:
         
               // Consumer group
               "group.id"               : consumerGroup,
-              "auto.offset.reset"      : "earliest",
         
               // auto offset management
               "enable.auto.commit"     : "false",
@@ -82,13 +81,14 @@ flows:
             consumer.withCloseable {
               while(keepOnReading) {
                 if ( numberOfMessages == 0 ) {
+                  println 'Number of Messages for topic is 0 ... terminating'
                   keepOnReading = false;
                 } else {
                   def records = consumer.poll Duration.ofMillis(100)
                 
                   records.each { record ->
                     numberOfMessagesReadSoFar += 1
-                    println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
+                    println ' Checking to see if message matches filter criteria ... '
                     if (numberOfMessagesReadSoFar >= numberOfMessages) {
                         keepOnReading = false;
                     }
