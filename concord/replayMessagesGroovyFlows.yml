@@ -21,15 +21,12 @@ flows:
         def schema = splitSource[0]
         def host = splitSource[1].split('/')[0]
         def topic = splitSource[1].split('/')[1]
-        def consumerGroup = 'hawkeyeConcord'
         
   
         switch(schema) {
           case 'kafka':
-            def consumer = createKafkaConsumer(host, consumerGroup)
-            def totalMessagesInTopic = getTotalMessagesForTopic(host, topic, consumerGroup)
-            replayMessagesFromKafka(consumer, topic, totalMessagesInTopic)
-            consumer.close()
+            def totalMessagesInTopic = getTotalMessagesForTopic(host, topic)
+            replayMessagesFromKafka(host, topic, totalMessagesInTopic)
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -45,20 +42,20 @@ flows:
         
               // Consumer group
               "group.id"               : consumerGroup,
-              "auto.offset.reset"      : "earliest",
         
               // auto offset management
               "enable.auto.commit"     : "false",
-              "auto.commit.interval.ms": "1000",
 
               // serializers
-              "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
-              "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
+              "value.deserializer"     : "org.apache.kafka.common.serialization.ByteArrayDeserializer",
+              "key.deserializer"       : "org.apache.kafka.common.serialization.ByteArrayDeserializer"
             ]) 
             return consumer
         }
         
-        def getTotalMessagesForTopic(host, topic, consumerGroup) {
+        def getTotalMessagesForTopic(host, topic) {
+            def consumerGroup = "hawkeye-topic-message-count"
+        
             def consumer = createKafkaConsumer(host, consumerGroup)
             def partitions = consumer.partitionsFor(topic).
                         stream().
@@ -73,9 +70,12 @@ flows:
             return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
-        def replayMessagesFromKafka(consumer, topic, numberOfMessages) { 
+        def replayMessagesFromKafka(host, topic, numberOfMessages) { 
             def numberOfMessagesRead = 0
             def keepOnReading = true
+            def consumerGroup = "hawkeye-replay-consumer"
+        
+            def consumer = createKafkaConsumer(host, consumerGroup)
             
             consumer.subscribe([topic] as List<String>)
             consumer.withCloseable {
