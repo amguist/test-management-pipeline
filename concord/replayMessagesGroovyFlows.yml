@@ -71,7 +71,7 @@ flows:
         }
         
         def replayMessagesFromKafka(host, topic, numberOfMessages) { 
-            def numberOfMessagesRead = 0
+            def numberOfMessagesReadSoFar = 0
             def keepOnReading = true
             def consumerGroup = "hawkeye-replay-consumer"
         
@@ -80,15 +80,17 @@ flows:
             consumer.subscribe([topic] as List<String>)
             consumer.withCloseable {
               while(keepOnReading) {
-                def records = consumer.poll Duration.ofMillis(100)
-                if ( numberOfMessagesToRead == 0 ) {
+                if ( numberOfMessages == 0 ) {
                   keepOnReading = false;
-                }
-                records.each { record ->
-                  numberOfMessagesReadSoFar += 1
-                  println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
-                  if (numberOfMessagesReadSoFar >= numberOfMessagesToRead) {
-                      keepOnReading = false;
+                } else {
+                  def records = consumer.poll Duration.ofMillis(100)
+                
+                  records.each { record ->
+                    numberOfMessagesReadSoFar += 1
+                    println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
+                    if (numberOfMessagesReadSoFar >= numberOfMessages) {
+                        keepOnReading = false;
+                    }
                   }
                 }
               }
