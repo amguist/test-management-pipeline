@@ -5,6 +5,9 @@ flows:
       body: |
         
         import com.google.gson.GsonBuilder
+        
+        import java.util.stream.Collectors
+        
         import org.apache.kafka.clients.consumer.ConsumerRecords
         import org.apache.kafka.clients.consumer.KafkaConsumer
         import org.apache.kafka.common.TopicPartition
