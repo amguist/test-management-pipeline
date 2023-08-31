@@ -68,7 +68,7 @@ flows:
             def endPartitions = partitions.
                         stream().
                         collect(Collectors.toMap(Function.identity(), consumer::position));
-            return 0
+            return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
         def replayMessagesFromKafka(host, topic, consumerGroup) { 
