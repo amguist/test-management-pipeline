@@ -42,4 +42,11 @@ flows:
               "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
               "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
           ])
+        
+          // Consume from the supplied topic
+          consumer.subscribe([topic])
+          ConsumerRecords records = consumer.poll(100)
+          records.each { deadletter ->
+            println "deadletter.value()\n"
+         }
         }
