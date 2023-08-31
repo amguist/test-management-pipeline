@@ -6,6 +6,7 @@ flows:
         
         import com.google.gson.GsonBuilder
         
+        import java.util.Collections
         import java.util.stream.Collectors
         
         import org.apache.kafka.clients.consumer.ConsumerRecords
@@ -60,6 +61,8 @@ flows:
                         stream().
                         map(p -> new TopicPartition(topic, p.partition())).
                         collect(Collectors.toList())
+            consumer.assign(partitions);
+            consumer.seekToEnd(Collections.emptySet());
             return 0
         }
         
