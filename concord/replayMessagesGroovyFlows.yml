@@ -72,6 +72,7 @@ flows:
         
         def getMessageIdFromHeaders(record) {
             record.headers().each { header -> 
+              println "Header Key: ${header.key()}\n"
               if(header.key().equals("messageId")) {
                 return header.value()  
               }
