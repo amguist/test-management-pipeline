@@ -70,6 +70,15 @@ flows:
             return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
+        def getMessageIdFromHeaders(record) {
+            record.headers().each { header -> 
+              if(header.key().equals("messageId")) {
+                return header.value()  
+              }
+            }
+          return 0
+        }
+        
         def replayMessagesFromKafka(host, topic, numberOfMessages) { 
             def numberOfMessagesReadSoFar = 0
             def keepOnReading = true
@@ -92,10 +101,9 @@ flows:
                 records.each { record ->
                   numberOfMessagesReadSoFar += 1
                   println "Record : ${record}\n"
-                 
-                  def messageId = record.headers.getAt("messageId")
-                  println "MessageId : ${messageId}\n"
-                  
+        
+                  def messageId = getMessageIdFromHeaders(record)
+                  println "Message Identifier value received is ${messageId}"
                    
                   if (numberOfMessagesReadSoFar >= numberOfMessages) {
                       keepOnReading = false;
