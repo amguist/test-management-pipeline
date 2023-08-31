@@ -28,7 +28,7 @@ flows:
           case 'kafka':
             def consumer = createKafkaConsumer(host, consumerGroup)
             def totalMessagesInTopic = getTotalMessagesForTopic(consumer, topic)
-        
+            replayMessagesFromKafka(consumer, topic, totalMessagesInTopic)
             consumer.close
             break;
           case 'cosmosdb':
@@ -71,7 +71,7 @@ flows:
             return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
-        def replayMessagesFromKafka(topic, numberOfMessages) { 
+        def replayMessagesFromKafka(consumer, topic, numberOfMessages) { 
             def numberOfMessagesRead = 0
             def keepOnReading = true
             
