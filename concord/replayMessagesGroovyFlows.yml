@@ -34,21 +34,32 @@ flows:
             def consumer = new KafkaConsumer([
               "bootstrap.servers"      : host,
         
+              // Consumer group
+              "group.id"               : consumerGroup,
+              "auto.offset.reset"      : "earliest",
+        
               // auto offset management
               "enable.auto.commit"     : "false",
+              "auto.commit.interval.ms": "1000",
 
               // serializers
               "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
               "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
             ])
             def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
+            
+            def totalCount = 0L;
+             
+            consumer.withCloseable {
+              while (true) {
+                def records = consumer.poll Duration.ofMillis(100)
+                for ( record in records ) {
+                  def value = record.value()
+                  totalCount += 1
         
-            // Consume from the supplied topic
-            consumer.subscribe([topic])
-            ConsumerRecords records = consumer.poll(100)
-            records.each { deadletter ->
-              def json = gson.fromJson(deadletter.value())
-              println("Value Pulled is: " + json)
-          }
-          consumer.close()
+                  println "Consumed record with key ${record.key()} and value $value"
+                }
+              }
+            }
+            consumer.close()
         }
