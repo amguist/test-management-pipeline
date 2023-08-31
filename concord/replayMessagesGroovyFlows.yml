@@ -29,7 +29,7 @@ flows:
             def consumer = createKafkaConsumer(host, consumerGroup)
             def totalMessagesInTopic = getTotalMessagesForTopic(host, topic, consumerGroup)
             replayMessagesFromKafka(consumer, topic, totalMessagesInTopic)
-            consumer..close()
+            consumer.close()
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -69,7 +69,7 @@ flows:
             def endPartitions = partitions.
                         stream().
                         collect(Collectors.toMap(Function.identity(), consumer::position));
-            consumer..close()
+            consumer.close()
             return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
