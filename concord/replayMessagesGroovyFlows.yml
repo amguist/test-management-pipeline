@@ -7,13 +7,14 @@ flows:
         
         def splitSource = replaySource.sourceUrl.split('://')
         def schema = splitSource[0]
+        def host = splitSource[1].split('/')[0]
         def topic = splitSource[1].split('/')[1]
         def consumerGroup = 'hawkeyeConcord'
         
   
         switch(schema) {
           case 'kafka':
-            replayMessagesFromKafka(topic)
+            replayMessagesFromKafka(host, topic, consumerGroup)
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -24,6 +25,21 @@ flows:
         }
         
         
-        def replayMessagesFromKafka(topic, consumerGroup) { 
+        def replayMessagesFromKafka(host, topic, consumerGroup) { 
           println('Retrieving message(s) from topic: ' + topic)
+        
+          def consumer = new KafkaConsumer([
+              "bootstrap.servers"      : host,
+              // Consumer group
+              "group.id"               : group,
+              "auto.offset.reset"      : "earliest",
+        
+              // auto offset management
+              "enable.auto.commit"     : "true",
+              "auto.commit.interval.ms": "1000",
+
+              // serializers
+              "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
+              "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
+          ])
         }
