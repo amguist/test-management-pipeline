@@ -92,7 +92,9 @@ flows:
                 records.each { record ->
                   numberOfMessagesReadSoFar += 1
                   println "Record : ${record}\n"
-                  
+                 
+                  def messageId = record.headers.get("messageId")
+                  println "MessageId : ${messageId}\n"
                   
                    
                   if (numberOfMessagesReadSoFar >= numberOfMessages) {
