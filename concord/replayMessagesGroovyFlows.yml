@@ -74,25 +74,24 @@ flows:
             def numberOfMessagesReadSoFar = 0
             def keepOnReading = true
             def consumerGroup = "hawkeye-replay-consumer"
+            def offsetToReadFrom = 0L
         
             def consumer = createKafkaConsumer(host, consumerGroup)
+            def partitionToReadFrom = new TopicPartition(topic, 0)
+            consumer.assign(List.of(partitionToReadFrom));
+            consumer.seek(partitionToReadFrom,offsetToReadFrom)
             
-            consumer.subscribe([topic] as List<String>)
-            consumer.withCloseable {
-              while(keepOnReading) {
-                if ( numberOfMessages == 0 ) {
-                  println 'Number of Messages for topic is 0 ... terminating'
-                  keepOnReading = false;
-                } else {
-                  println " Current value of number of messages ${numberOfMessages} .... "
-                  def records = consumer.poll(Duration.ofMillis(100))
-                
-                  records.each { record ->
-                    numberOfMessagesReadSoFar += 1
-                    println ' Checking to see if message matches filter criteria ... '
-                    if (numberOfMessagesReadSoFar >= numberOfMessages) {
-                        keepOnReading = false;
-                    }
+            while(keepOnReading) {
+              if ( numberOfMessages == 0 ) {
+                println 'Number of Messages for topic is 0 ... terminating'
+                keepOnReading = false;
+              } else {
+                def records = consumer.poll(Duration.ofMillis(100))
+                records.each { record ->
+                  numberOfMessagesReadSoFar += 1
+                  println ' Checking to see if message matches filter criteria ... '
+                  if (numberOfMessagesReadSoFar >= numberOfMessages) {
+                      keepOnReading = false;
                   }
                 }
               }
