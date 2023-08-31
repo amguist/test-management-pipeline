@@ -75,14 +75,16 @@ flows:
             def numberOfMessagesRead = 0
             def keepOnReading = true
             
-            consumer.subscribe([topic])
-            while(keepOnReading) {
-              ConsumerRecords records = consumer.poll(100)
-              records.each { record ->
-                numberOfMessagesReadSoFar += 1
-                println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
-                if (numberOfMessagesReadSoFar >= numberOfMessagesToRead) {
-                    keepOnReading = false;
+            consumer.subscribe([topic] as List<String>)
+            consumer.withCloseable {
+              while(keepOnReading) {
+                def records = consumer.poll Duration.ofMillis(100)
+                records.each { record ->
+                  numberOfMessagesReadSoFar += 1
+                  println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
+                  if (numberOfMessagesReadSoFar >= numberOfMessagesToRead) {
+                      keepOnReading = false;
+                  }
                 }
               }
             }
