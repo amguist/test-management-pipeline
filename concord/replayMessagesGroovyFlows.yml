@@ -3,6 +3,8 @@ flows:
     - log: "Preparing to perform a request to Source: ${replaySource.sourceUrl} for reprocessing messages ..."
     - script: groovy
       body: |
+        
+        import com.google.gson.GsonBuilder
         import org.apache.kafka.clients.consumer.ConsumerRecords
         import org.apache.kafka.clients.consumer.KafkaConsumer
         
@@ -43,12 +45,14 @@ flows:
               "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
               "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
             ])
+            def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
         
             // Consume from the supplied topic
             consumer.subscribe([topic])
             ConsumerRecords records = consumer.poll(100)
             records.each { deadletter ->
-              println "deadletter.value()\n"
+              def json = gson.fromJson(deadletter.value())
+              println("Value Pulled is: " + json)
           }
           consumer.close()
         }
