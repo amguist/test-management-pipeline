@@ -93,7 +93,7 @@ flows:
                   numberOfMessagesReadSoFar += 1
                   println "Record : ${record}\n"
                  
-                  def messageId = record.headers.get("messageId")
+                  def messageId = record.headers.getAt("messageId")
                   println "MessageId : ${messageId}\n"
                   
                    
