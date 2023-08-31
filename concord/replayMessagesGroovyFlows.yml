@@ -42,6 +42,7 @@ flows:
         
               // Consumer group
               "group.id"               : consumerGroup,
+              "auto.offset.reset"      : "earliest",
         
               // auto offset management
               "enable.auto.commit"     : "false",
@@ -77,7 +78,6 @@ flows:
         
             def consumer = createKafkaConsumer(host, consumerGroup)
             
-            consumer.seekToBeginning()
             consumer.subscribe([topic] as List<String>)
             consumer.withCloseable {
               while(keepOnReading) {
