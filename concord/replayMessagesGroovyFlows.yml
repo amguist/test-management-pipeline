@@ -8,6 +8,8 @@ flows:
         import org.apache.kafka.clients.consumer.ConsumerRecords
         import org.apache.kafka.clients.consumer.KafkaConsumer
         
+        import java.time.Duration
+        
         def splitSource = replaySource.sourceUrl.split('://')
         def schema = splitSource[0]
         def host = splitSource[1].split('/')[0]
