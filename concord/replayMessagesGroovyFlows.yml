@@ -80,7 +80,7 @@ flows:
             consumer.subscribe([topic] as List<String>)
             consumer.withCloseable {
               while(keepOnReading) {
-                println ' Current value of number of messages $numberOfMessages ....'
+                println " Current value of number of messages ${numberOfMessages} .... "
                 if ( numberOfMessages == 0 ) {
                   println 'Number of Messages for topic is 0 ... terminating'
                   keepOnReading = false;
