@@ -49,9 +49,9 @@ flows:
               "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
             ])
             def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
-            
             def totalCount = 0L;
-             
+            
+            consumer.subscribe([topic] as List<String>) 
             consumer.withCloseable {
               while (true) {
                 def records = consumer.poll Duration.ofMillis(100)
