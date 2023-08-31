@@ -33,8 +33,6 @@ flows:
         
             def consumer = new KafkaConsumer([
               "bootstrap.servers"      : host,
-              // Consumer group
-              "group.id"               : consumerGroup,
         
               // auto offset management
               "enable.auto.commit"     : "false",
