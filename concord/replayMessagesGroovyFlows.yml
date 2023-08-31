@@ -83,7 +83,6 @@ flows:
                 println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
                 if (numberOfMessagesReadSoFar >= numberOfMessagesToRead) {
                     keepOnReading = false;
-                    break; 
                 }
               }
             }
