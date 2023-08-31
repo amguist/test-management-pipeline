@@ -50,15 +50,22 @@ flows:
             ])
             def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
             def totalCount = 0L;
+            def searchedAllMessages = false
             
             consumer.subscribe([topic] as List<String>) 
             consumer.withCloseable {
-              def records = consumer.poll Duration.ofMillis(100)
-              for ( record in records ) {
-                def value = record.value()
-                totalCount += 1
+              while(!searchedAllMessages) {
+                def records = consumer.poll Duration.ofMillis(100)
+                for ( record in records ) {
+                  def value = record.value()
+                  totalCount += 1
       
-                println "Consumed record with headers ${record.headers()}"
+                  println "Consumed record with headers ${record.headers()}"
+                }
+                
+                if (records.size() < 1) {
+                  searchedAllMessages = true 
+                }
               }
             }
             consumer.close()
