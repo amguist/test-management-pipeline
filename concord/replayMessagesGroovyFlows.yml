@@ -81,6 +81,9 @@ flows:
             consumer.withCloseable {
               while(keepOnReading) {
                 def records = consumer.poll Duration.ofMillis(100)
+                if ( numberOfMessagesToRead == 0 ) {
+                  keepOnReading = false;
+                }
                 records.each { record ->
                   numberOfMessagesReadSoFar += 1
                   println 'Partition: ' + record.partition() + ', Offset: ' + record.offset()
