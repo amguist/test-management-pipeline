@@ -19,7 +19,10 @@ flows:
   
         switch(schema) {
           case 'kafka':
-            replayMessagesFromKafka(host, topic, consumerGroup)
+            def consumer = createKafkaConsumer(host, consumerGroup)
+            def totalMessagesInTopic = getTotalMessagesForTopic(consumer, topic)
+        
+            println "Total Number Of Messages is: $totalMessagesInTopic"
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -28,11 +31,8 @@ flows:
             println('Schema ' + schema + ' is not supported .....' )
             break;
         }
-        
-        
-        def replayMessagesFromKafka(host, topic, consumerGroup) { 
-            println('Retrieving message(s) from topic: ' + topic)
-        
+       
+        def createKafkaConsumer(host,consumerGroup) {
             def consumer = new KafkaConsumer([
               "bootstrap.servers"      : host,
         
@@ -47,21 +47,19 @@ flows:
               // serializers
               "value.deserializer"     : "org.apache.kafka.common.serialization.StringDeserializer",
               "key.deserializer"       : "org.apache.kafka.common.serialization.StringDeserializer"
-            ])
-            def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
-            def totalCount = 0L;
+            ]) 
+            return consumer
+        }
+        
+        def getTotalMessagesForTopic(consumer, topic) {
+            def partitions = consumer.partitionsFor(topic).stream().map(p -> new TopicPartition(topic, p.partition())).collect(Collectors.toList());
+            consumer.assign(partitions);
+            consumer.seekToEnd(Collections.emptySet());
+            def endPartitions = partitions.stream().collect(Collectors.toMap(Function.identity(), consumer::position));
+        
+            return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
+        }
+        
+        def replayMessagesFromKafka(host, topic, consumerGroup) { 
             
-            consumer.subscribe([topic] as List<String>) 
-            consumer.withCloseable {
-              while(true) {
-                def records = consumer.poll Duration.ofMillis(100)
-                for ( record in records ) {
-                  def value = record.value()
-                  totalCount += 1
-      
-                  println "Consumed record with headers ${record.headers()}"
-                }
-              }
-            }
-            consumer.close()
         }
