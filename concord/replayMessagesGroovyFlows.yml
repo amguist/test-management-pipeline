@@ -53,7 +53,7 @@ flows:
         
         def getTotalMessagesForTopic(consumer, topic) {
             def partitions = consumer.partitionsFor(topic).stream()
-              .map(p -> new TopicPartition(topic, p.partition()))
+              .map { p -> new TopicPartition(topic, p.partition()) }
               .collect(Collectors.toList())
             return 0
         }
