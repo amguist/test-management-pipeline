@@ -52,12 +52,10 @@ flows:
         }
         
         def getTotalMessagesForTopic(consumer, topic) {
-            def partitions = consumer.partitionsFor(topic).stream().map(p -> new TopicPartition(topic, p.partition())).collect(Collectors.toList());
-            consumer.assign(partitions);
-            consumer.seekToEnd(Collections.emptySet());
-            def endPartitions = partitions.stream().collect(Collectors.toMap(Function.identity(), consumer::position));
-        
-            return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
+            def partitions = consumer.partitionsFor(topic).stream()
+              .map(p -> new TopicPartition(topic, p.partition()))
+              .collect(Collectors.toList())
+            return 0
         }
         
         def replayMessagesFromKafka(host, topic, consumerGroup) { 
