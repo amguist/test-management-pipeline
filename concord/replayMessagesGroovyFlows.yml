@@ -27,7 +27,7 @@ flows:
         switch(schema) {
           case 'kafka':
             def consumer = createKafkaConsumer(host, consumerGroup)
-            def totalMessagesInTopic = getTotalMessagesForTopic(consumer, topic)
+            def totalMessagesInTopic = getTotalMessagesForTopic(host, topic, consumerGroup)
             replayMessagesFromKafka(consumer, topic, totalMessagesInTopic)
             consumer.close
             break;
@@ -58,7 +58,8 @@ flows:
             return consumer
         }
         
-        def getTotalMessagesForTopic(consumer, topic) {
+        def getTotalMessagesForTopic(host, topic, consumerGroup) {
+            def consumer = createKafkaConsumer(host, consumerGroup)
             def partitions = consumer.partitionsFor(topic).
                         stream().
                         map(p -> new TopicPartition(topic, p.partition())).
@@ -68,6 +69,7 @@ flows:
             def endPartitions = partitions.
                         stream().
                         collect(Collectors.toMap(Function.identity(), consumer::position));
+            consumer.close
             return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
