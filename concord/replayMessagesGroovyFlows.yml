@@ -7,8 +7,9 @@ flows:
         
         def splitSource = replaySource.sourceUrl.split('://')
         def schema = splitSource[0]
-  
         def topic = splitSource[1].split('/')[1]
+        def consumerGroup = 'hawkeyeConcord'
+        
   
         switch(schema) {
           case 'kafka':
