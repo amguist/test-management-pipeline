@@ -41,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <br>
                 <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
@@ -73,7 +74,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label><b>Message Id/Offset(s)</b></label>
+                                            <label><b>Message Id(s)</b></label>
                                         </td>
                                         <td>
                                             <div class="ui input focus">
@@ -81,7 +82,17 @@
                                             </div>
                                         </td>
                                     </tr>
-
+                                    <tr>
+                                        <div class="two column row">
+                                            <div class="column">
+                                                <label>Enable Ordering</label>
+                                                <div id="enforceOrdering" name="enforceOrdering" class="ui fluid selection search dropbox">
+                                                    <input name="enforceOrdering" type="hidden">
+                                                    <i class="dropdown icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -111,6 +122,50 @@
                     document.getElementById("onlyTriggeredBy").innerHTML=`${data.values.executedBy}`;
                     document.getElementById("onlyOrganization").innerHTML=`${data.values.organization}`;
                     document.getElementById("onlyProcessId").innerHTML=`${data.values.processId}`;
+
+                    $(.ui.dropdown.enforceOrdering).dropdown();
+                    let orderingOptions = []
+                    let noOption = {
+                        "name" : "No",
+                        "value" : "No",
+                        "text" : "No"
+                    }
+                    let yesOption = {
+                        "name" : "Yes",
+                        "value" : "Yes",
+                        "text" : "Yes"
+                    }
+                    orderingOptions.push(noOption);
+                    orderingOptions.push(yesOption);
+                    $(.ui.dropdown.enforceOrdering).dropdown({values: orderingOptions});
+
+                    $(.ui.dropdown.environments).dropdown();
+                    let environmentOptions = []
+                    let devOption = {
+                        "name" : "Development",
+                        "value" : "Dev",
+                        "text" : "Development"
+                    }
+                    let qaOption = {
+                        "name" : "Quality Assurance",
+                        "value" : "QA",
+                        "text" : "Quality Assurance"
+                    }
+                    let stageOption = {
+                        "name" : "Stage",
+                        "value" : "Stage",
+                        "text" : "Stage"
+                    }
+                    let prodOption = {
+                        "name" : "Production",
+                        "value" : "Prod",
+                        "text" : "Production"
+                    }
+                    environmentOptions.push(devOption);
+                    environmentOptions.push(qaOption);
+                    environmentOptions.push(stageOption);
+                    environmentOptions.push(prodOption);
+                    $(.ui.dropdown.environments).dropdown({values: environmentOptions});
                 }
 
                 $("#replaySource").submit(function(e) {
