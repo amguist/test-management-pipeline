@@ -112,7 +112,7 @@
                     document.getElementById("onlyOrganization").innerHTML=`${data.values.organization}`;
                     document.getElementById("onlyProcessId").innerHTML=`${data.values.processId}`;
 
-                    $(.ui.dropdown).dropdown();
+                    $('.ui.dropdown').dropdown();
                     let orderingOptions = []
                     let noOption = {
                         "name" : "No",
@@ -126,7 +126,7 @@
                     }
                     orderingOptions.push(noOption);
                     orderingOptions.push(yesOption);
-                    $(.ui.dropdown).dropdown({values: orderingOptions});
+                    $('.ui.dropdown').dropdown({values: orderingOptions});
                 }
 
                 $("#replaySource").submit(function(e) {
