@@ -82,17 +82,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <div class="two column row">
-                                            <div class="column">
-                                                <label>Enable Ordering</label>
-                                                <div id="enforceOrdering" name="enforceOrdering" class="ui fluid selection search dropbox">
-                                                    <input name="enforceOrdering" type="hidden">
-                                                    <i class="dropdown icon"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -123,7 +112,7 @@
                     document.getElementById("onlyOrganization").innerHTML=`${data.values.organization}`;
                     document.getElementById("onlyProcessId").innerHTML=`${data.values.processId}`;
 
-                    $(.ui.dropdown.enforceOrdering).dropdown();
+                    $(.ui.dropdown).dropdown();
                     let orderingOptions = []
                     let noOption = {
                         "name" : "No",
@@ -137,35 +126,7 @@
                     }
                     orderingOptions.push(noOption);
                     orderingOptions.push(yesOption);
-                    $(.ui.dropdown.enforceOrdering).dropdown({values: orderingOptions});
-
-                    $(.ui.dropdown.environments).dropdown();
-                    let environmentOptions = []
-                    let devOption = {
-                        "name" : "Development",
-                        "value" : "Dev",
-                        "text" : "Development"
-                    }
-                    let qaOption = {
-                        "name" : "Quality Assurance",
-                        "value" : "QA",
-                        "text" : "Quality Assurance"
-                    }
-                    let stageOption = {
-                        "name" : "Stage",
-                        "value" : "Stage",
-                        "text" : "Stage"
-                    }
-                    let prodOption = {
-                        "name" : "Production",
-                        "value" : "Prod",
-                        "text" : "Production"
-                    }
-                    environmentOptions.push(devOption);
-                    environmentOptions.push(qaOption);
-                    environmentOptions.push(stageOption);
-                    environmentOptions.push(prodOption);
-                    $(.ui.dropdown.environments).dropdown({values: environmentOptions});
+                    $(.ui.dropdown).dropdown({values: orderingOptions});
                 }
 
                 $("#replaySource").submit(function(e) {
