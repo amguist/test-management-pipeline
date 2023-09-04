@@ -20,7 +20,7 @@
                 </div>
             </div>
             <form id="replaySource" class="ui form">
-                <div class="ui two column stackable grid">
+                <div class="ui three column stackable grid">
                     <div class="three column row">
                         <div class="column">
                             <label><b>Organization</b></label>
@@ -41,29 +41,30 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="two column row">
+                        <div class="column">
+                            <label>Enforce Ordering</label>
+                            <select id="enforceOrdering" name="enforceOrdering" class="ui dropdown">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="column">
+                            <label>Environment</label>
+                            <select id="environment" name="environment" class="ui dropdown">
+                                <option value="dev">Development</option>
+                                <option value="qa">Quality Assurance</option>
+                                <option value="stage">Stage</option>
+                                <option value="prod">Production</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
                     <div class="ui padded grid">
                         <div class="row">
                             <h1 class="ui huge dividing header">Replay Message Request</h1>
-                        </div>
-                        <div class="two column row">
-                            <div class="column">
-                                <label><b>Enforce Ordering</b></label>
-                                <div id="enforceOrdering" class="ui fluid selection search dropdown">
-                                    <input name="enforceOrdering" type="hidden">
-                                    <i class="dropdown icon"/>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <label><b>Environment</b></label>
-                                <div id="environments" class="ui fluid selection search dropdown">
-                                    <input name="environment" type="hidden">
-                                    <i class="dropdown icon"/>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <table class="ui very basic table">
