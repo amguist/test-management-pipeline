@@ -128,22 +128,6 @@
                     document.getElementById("onlyTriggeredBy").innerHTML=`${data.values.executedBy}`;
                     document.getElementById("onlyOrganization").innerHTML=`${data.values.organization}`;
                     document.getElementById("onlyProcessId").innerHTML=`${data.values.processId}`;
-
-                    $('.ui.dropdown').dropdown();
-                    let orderingOptions = []
-                    let noOption = {
-                        "name" : "No",
-                        "value" : "No",
-                        "text" : "No"
-                    }
-                    let yesOption = {
-                        "name" : "Yes",
-                        "value" : "Yes",
-                        "text" : "Yes"
-                    }
-                    orderingOptions.push(noOption);
-                    orderingOptions.push(yesOption);
-                    $('.ui.dropdown').dropdown({values: orderingOptions});
                 }
 
                 $("#replaySource").submit(function(e) {
