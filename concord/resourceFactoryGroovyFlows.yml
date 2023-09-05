@@ -74,8 +74,9 @@ flows:
         def containsMessageIdFromHeader(consumerRecord) {
           consumerRecord.headers().each { header ->
             if ( header.key().equals('messageId') ) {
-              def messageId = new String(header.value(), StandardCharsets.UTF_8);
+              def messageId = new String(header.value(), StandardCharsets.UTF_8).trim();
               messageIdentifiers.each { messageIdentifier ->
+                println "Message Identifier: ${messageIdentifier} ... messageId: ${messageId}"
                 if ( messageIdentifier == messageId ) {
                   return true
                 }
