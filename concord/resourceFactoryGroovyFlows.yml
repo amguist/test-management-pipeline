@@ -2,6 +2,8 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
+        import java.nio.charset.StandardCharsets
+        
         import java.time.Duration
         
         import java.util.Collections
@@ -72,7 +74,8 @@ flows:
         def containsMessageIdFromHeader(consumerRecord) {
           consumerRecord.headers().each { header ->
             if ( header.key().equals('messageId') ) {
-              println "Total size of messageIdentifier collection is: ${messageIdentifiers.size()}\n"
+              def messageId = new String(header.value(), StandardCharsets.UTF_8);
+              println "Value Of Header: ${messageId}"
             }
           }
           return false
