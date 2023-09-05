@@ -60,6 +60,7 @@ flows:
               }
             }
           }
+          return filteredMessages
         }
         
         def getMessageCountForTopic(consumer, topic) {
