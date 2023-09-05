@@ -24,10 +24,9 @@ flows:
             def host = resolveHost(schema, environment)
             def consumer = createKafkaConsumer(host)
             def topic = getTopic()
-            
-            println "Retrieving Messages from topic: ${topic}\n"
             def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
-            println "${topic} has a total of ${totalNumberOfMessages} messages\n"
+            def filteredMessages = filterMessagesToReplay(consumer, topic, totalNumberOfMessages)
+            consumer.close()
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -36,6 +35,31 @@ flows:
           default:
             println('Schema ' + schema + ' is not supported .....' )
             break;
+        }
+        
+        def filterMessagesToReplay(consumer, topic, totalNumberOfMessages) {
+          def numberOfMessagesReadSoFar = 0
+          def keepOnReading = true
+          def filteredMessages = new ArrayList<>();
+        
+          def partitionToReadFrom = new TopicPartition(topic, 0)
+          consumer.assign(List.of(partitionToReadFrom));
+          consumer.seek(partitionToReadFrom, 0L)
+        
+          while(keepOnReading) {
+            if ( totalNumberOfMessages == 0 ) {
+                keepOnReading = false;
+            } else {
+              def records = consumer.poll(Duration.ofMillis(500)) 
+              records.each { record ->
+                numberOfMessagesReadSoFar += 1
+                
+                if (numberOfMessagesReadSoFar >= totalNumberOfMessages) {
+                      keepOnReading = false;
+                }
+              }
+            }
+          }
         }
         
         def getMessageCountForTopic(consumer, topic) {
