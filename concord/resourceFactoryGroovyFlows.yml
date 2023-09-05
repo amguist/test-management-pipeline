@@ -10,7 +10,7 @@ flows:
         def uriToParse = applySubstitutions(uri)
         
         def applySubstitutions(uri) {
-            def pattern = Pattern.compile("\\{[^{}]+)\\}"); 
+            def pattern = Pattern.compile("\\{([^{}]+)\\}"); 
             def matcher = pattern.matcher(uri)
         
             def substitutedConfig = uri
