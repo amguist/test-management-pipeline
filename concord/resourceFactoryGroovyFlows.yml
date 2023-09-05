@@ -2,6 +2,8 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
+        import java.time.Duration
+        
         import java.util.Collections
         
         import java.util.function.Function
