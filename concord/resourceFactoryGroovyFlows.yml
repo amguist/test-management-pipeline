@@ -72,7 +72,7 @@ flows:
         def containsMessageIdFromHeader(consumerRecord) {
           consumerRecord.headers().each { header ->
             if ( header.key().equals('messageId') ) {
-              println "Found header does have a messageId attribute\n" 
+              println "Total size of messageIdentifier collection is: ${messageIdentifiers.size()}\n"
             }
           }
           return false
