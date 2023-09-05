@@ -8,6 +8,54 @@ flows:
         
         println "Apply Substitutions to uri: ${uri}\n"
         def uriToParse = applySubstitutions(uri)
+        def schema = parseSchemaFromDefinition(uri)
+        
+        switch(schema) {
+          case 'kafka':
+            
+            println('Schema is of type Kafka ....')
+            break;
+          case 'cosmosdb':
+            println('Schema is of type Cosmos DB ....')
+            break;
+          default:
+            println('Schema ' + schema + ' is not supported .....' )
+            break;
+        }
+        
+        def isProductionEnvironment(environment) {
+          if(environment == 'prod') {
+            return true
+          }
+          return false
+        }
+        
+        def resolveHost(schema, environment) {
+          switch(schema) {
+            case 'kafka':
+              if(isProductionEnvironment(environment)) {
+                  return "10.0.0.121:9092"
+              } else {
+                  return "10.0.0.121:9092" 
+              }
+              break;
+            case 'cosmosdb':
+              if(isProductionEnvironment(environment)) {
+                  return "" 
+              } else {
+                  return "" 
+              }
+              break;
+            default:
+              println('Schema ' + schema + ' is not supported .....' )
+              break; 
+          }
+        }
+      
+        def parseSchemaFromDefinition(uri) {
+          def splitSource = uri.split('://')
+          return splitSource[0]
+        }
         
         def applySubstitutions(uri) {
             def pattern = Pattern.compile("\\{([^{}]+)\\}"); 
