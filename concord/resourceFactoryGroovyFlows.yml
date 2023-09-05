@@ -2,8 +2,11 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
-      
+        import java.util.Collections
+        
+        import java.util.function.Function
         import java.util.regex.Pattern
+        import java.util.stream.Collectors
         
         import org.apache.kafka.clients.consumer.KafkaConsumer
         import org.apache.kafka.common.TopicPartition
