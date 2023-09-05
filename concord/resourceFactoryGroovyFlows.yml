@@ -6,6 +6,7 @@ flows:
         import java.util.regex.Pattern
         
         import org.apache.kafka.clients.consumer.KafkaConsumer
+        import org.apache.kafka.common.TopicPartition
         
         def uri = "${replaySource.sourceUrl}"
         def environment = "${replaySource.environment}"
@@ -22,6 +23,8 @@ flows:
             def topic = getTopic()
             
             println "Retrieving Messages from topic: ${topic}\n"
+            def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
+            println "${topic} has a total of ${totalNumberOfMessages} messages\n"
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -30,6 +33,20 @@ flows:
           default:
             println('Schema ' + schema + ' is not supported .....' )
             break;
+        }
+        
+        def getMessageCountForTopic(consumer, topic) {
+          def partitions = consumer.partitionsFor(topic).
+              stream().
+              map(p -> new TopicPartition(topic, p.partition())).
+              collect(Collectors.toList())
+          consumer.assign(partitions);
+          consumer.seekToEnd(Collections.emptySet());
+          def endPartitions = partitions.
+              stream().
+              collect(Collectors.toMap(Function.identity(), consumer::position));
+          consumer.close()
+          return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
         }
         
         def createKafkaConsumer(host) {
