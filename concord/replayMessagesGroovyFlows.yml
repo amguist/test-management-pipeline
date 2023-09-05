@@ -23,10 +23,10 @@ flows:
         def schema = splitSource[0]
         def host = splitSource[1].split('/')[0]
         def topic = splitSource[1].split('/')[1]
-        
   
         switch(schema) {
           case 'kafka':
+            
             def totalMessagesInTopic = getTotalMessagesForTopic(host, topic)
             replayMessagesFromKafka(host, topic, totalMessagesInTopic)
             break;

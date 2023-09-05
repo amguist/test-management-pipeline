@@ -6,7 +6,8 @@ flows:
         organization: ${organization}
         processId: ${txId}
     - checkpoint: "Processing Request ..."
+
     - expr: ${replaySource.messageIds.stream().flatMap(str -> str.split(",").stream()).toList()}
       out: messageIdentifiers
-    - call: get-source-messages
+    - call: parse-url-definition
 

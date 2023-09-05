@@ -1,0 +1,5 @@
+flows:
+  parse-url-definition:
+    - script: groovy
+      body: |
+        println "Apply Substitutions to uri: ${replaySource.sourceUrl}\n"
