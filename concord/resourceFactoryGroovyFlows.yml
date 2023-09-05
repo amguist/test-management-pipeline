@@ -2,7 +2,10 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
+      
         import java.util.regex.Pattern
+        
+        import org.apache.kafka.clients.consumer.KafkaConsumer
         
         def uri = "${replaySource.sourceUrl}"
         def environment = "${replaySource.environment}"
@@ -15,6 +18,7 @@ flows:
           case 'kafka':
             println('Schema is of type Kafka ....')
             def host = resolveHost(schema, environment)
+            def consumer = createKafkaConsumer(host)
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -23,6 +27,23 @@ flows:
           default:
             println('Schema ' + schema + ' is not supported .....' )
             break;
+        }
+        
+        def createKafkaConsumer(host) {
+          def consumer = new KafkaConsumer([
+              "bootstrap.servers"      : host,
+        
+              // Consumer group
+              "group.id"               : "hawkeye-replay-consumer",
+        
+              // auto offset management
+              "enable.auto.commit"     : "false",
+
+              // serializers
+              "value.deserializer"     : "org.apache.kafka.common.serialization.ByteArrayDeserializer",
+              "key.deserializer"       : "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+            ]) 
+            return consumer
         }
         
         def isProductionEnvironment(environment) {
