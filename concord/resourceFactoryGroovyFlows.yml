@@ -2,7 +2,23 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
+        import java.util.regex.Pattern
+        
         def uri = "${replaySource.sourceUrl}"
         
         println "Apply Substitutions to uri: ${uri}\n"
-        def uriToParse = applySubstitutions(replaySource.sourceUrl)
+        def uriToParse = applySubstitutions(uri)
+        
+        def applySubstitutions(uri) {
+            def pattern = Pattern.compile("\\{[^{}]+)\\}"); 
+            def matcher = pattern.matcher(uri)
+        
+            def substitutedConfig = uri
+            while(matcher.find()) {
+              def group = matcher.group()
+              if(!group.equals("{}")) {
+                def key = group.substring(1,group.length() - 1)
+                println "Key value to lookup is: ${key}\n"
+              }
+            }
+        }
