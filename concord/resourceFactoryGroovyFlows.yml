@@ -55,6 +55,9 @@ flows:
               def records = consumer.poll(Duration.ofMillis(500)) 
               records.each { record ->
                 numberOfMessagesReadSoFar += 1
+                if ( containsMessageIdFromHeader(record) ) {
+                  println " Adding Message To Reprocess List ... \n" 
+                }
                 
                 if (numberOfMessagesReadSoFar >= totalNumberOfMessages) {
                   println "Total Messages that have been read is: ${numberOfMessagesReadSoFar}\n"
@@ -64,6 +67,12 @@ flows:
             }
           }
           return filteredMessages
+        }
+        
+        def containsMessageIdFromHeader(consumerRecord) {
+          consumerRecord.headers().each { header ->
+            println "Header Key: ${header.key()}\n"
+          }
         }
         
         def getMessageCountForTopic(consumer, topic) {
