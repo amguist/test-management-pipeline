@@ -75,9 +75,7 @@ flows:
           consumerRecord.headers().each { header ->
             if ( header.key().equals('messageId') ) {
               def messageId = new String(header.value(), StandardCharsets.UTF_8);
-              if(messageIdentifiers.contains('${messageId}')) {
-                return true
-              }
+              return messageIdentifiers.find { it == '$messageId' }.isEmpty()
             }
           }
           return false
