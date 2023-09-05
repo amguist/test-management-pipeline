@@ -19,6 +19,9 @@ flows:
             println('Schema is of type Kafka ....')
             def host = resolveHost(schema, environment)
             def consumer = createKafkaConsumer(host)
+            def topic = getTopic()
+            
+            println "Retrieving Messages from topic: ${topic}\n"
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -32,18 +35,17 @@ flows:
         def createKafkaConsumer(host) {
           def consumer = new KafkaConsumer([
               "bootstrap.servers"      : host,
-        
-              // Consumer group
               "group.id"               : "hawkeye-replay-consumer",
-        
-              // auto offset management
               "enable.auto.commit"     : "false",
-
-              // serializers
               "value.deserializer"     : "org.apache.kafka.common.serialization.ByteArrayDeserializer",
               "key.deserializer"       : "org.apache.kafka.common.serialization.ByteArrayDeserializer"
             ]) 
             return consumer
+        }
+        
+        def getTopic() {
+          def splitSource = replaySource.sourceUrl.split('://')
+          return splitSource[1].split('/')[1]
         }
         
         def isProductionEnvironment(environment) {
