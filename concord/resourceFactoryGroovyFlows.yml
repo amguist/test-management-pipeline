@@ -57,7 +57,8 @@ flows:
                 numberOfMessagesReadSoFar += 1
                 
                 if (numberOfMessagesReadSoFar >= totalNumberOfMessages) {
-                      keepOnReading = false;
+                  println "Total Messages that have been read is: ${numberOfMessagesReadSoFar}\n"
+                  keepOnReading = false;
                 }
               }
             }
