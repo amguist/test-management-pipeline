@@ -71,8 +71,11 @@ flows:
         
         def containsMessageIdFromHeader(consumerRecord) {
           consumerRecord.headers().each { header ->
-            println "Header Key: ${header.key()}\n"
+            if ( header.key().equals('messageId') ) {
+              println "Found header does have a messageId attribute\n" 
+            }
           }
+          return false
         }
         
         def getMessageCountForTopic(consumer, topic) {
