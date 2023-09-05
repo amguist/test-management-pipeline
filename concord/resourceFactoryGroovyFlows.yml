@@ -5,6 +5,7 @@ flows:
         import java.util.regex.Pattern
         
         def uri = "${replaySource.sourceUrl}"
+        def environment = "${replaySource.environment}"
         
         println "Apply Substitutions to uri: ${uri}\n"
         def uriToParse = applySubstitutions(uri)
@@ -12,11 +13,12 @@ flows:
         
         switch(schema) {
           case 'kafka':
-            
             println('Schema is of type Kafka ....')
+            def host = resolveHost(schema, environment)
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
+            def host = resolveHost(schema, environment)
             break;
           default:
             println('Schema ' + schema + ' is not supported .....' )
