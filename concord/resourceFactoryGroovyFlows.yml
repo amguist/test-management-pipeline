@@ -2,4 +2,7 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
-        println "Apply Substitutions to uri: ${replaySource.sourceUrl}\n"
+        def uri = "${replaySource.sourceUrl}"
+        
+        println "Apply Substitutions to uri: ${uri}\n"
+        def uriToParse = applySubstitutions(replaySource.sourceUrl)
