@@ -18,13 +18,11 @@ flows:
         def uri = "${replaySource.sourceUrl}"
         def environment = "${replaySource.environment}"
         
-        println "Apply Substitutions to uri: ${uri}\n"
         def uriToParse = applySubstitutions(uri)
         def schema = parseSchemaFromDefinition(uri)
         
         switch(schema) {
           case 'kafka':
-            println('Schema is of type Kafka ....')
             def host = resolveHost(schema, environment)
             def consumer = createKafkaConsumer(host)
             def topic = getTopic()
