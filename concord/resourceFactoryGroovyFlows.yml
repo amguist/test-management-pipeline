@@ -52,9 +52,10 @@ flows:
           def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
           messages.each { message -> 
             def headers = message.headers()
-            def deadLetterPayload = gson.toJson(message.value())
+            def messageValue = new String(message.value(), StandardCharsets.UTF_8).trim();
+            println "Dead Letter Payload: ${messageValue}" 
         
-            println "Dead Letter Payload: ${deadLetterPayload}" 
+        
           }
           producer.close()
         }
