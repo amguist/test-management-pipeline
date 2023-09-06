@@ -2,8 +2,6 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
-        import com.google.gson.GsonBuilder
-        
         import java.nio.charset.StandardCharsets
         
         import java.time.Duration
@@ -50,7 +48,6 @@ flows:
         
         def replayMessages(host, messages, topic) {
           def producer = createKafkaProducer(host) 
-          def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
           messages.each { message -> 
             def producerRecord = new ProducerRecord(topic, message.partition(), message.key(), message.value(), message.headers())
             producer.send(producerRecord)
