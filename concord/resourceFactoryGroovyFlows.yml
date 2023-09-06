@@ -30,10 +30,9 @@ flows:
             def topic = getTopic()
             def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
             def filteredMessages = filterMessagesToReplay(consumer, topic, totalNumberOfMessages)
-            
-            def filteredSize = filteredMessages.size()
-            println "Total Number Of Filtered Messages is ${filteredSize}"
             consumer.close()
+        
+            
             break;
           case 'cosmosdb':
             println('Schema is of type Cosmos DB ....')
@@ -66,7 +65,6 @@ flows:
                 }
                 
                 if (numberOfMessagesReadSoFar >= totalNumberOfMessages) {
-                  println "Total Messages that have been read is: ${numberOfMessagesReadSoFar}\n"
                   keepOnReading = false;
                 }
               }
