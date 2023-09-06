@@ -72,6 +72,7 @@ flows:
         }
         
         def containsMessageIdFromHeader(consumerRecord) {
+          def headerFilterExists = false
           consumerRecord.headers().each { header ->
             if ( header.key().equals('messageId') ) {
               def messageId = new String(header.value(), StandardCharsets.UTF_8).trim();
@@ -80,11 +81,11 @@ flows:
         
               if(messageIdentifiers.contains(messageId)) {
                 println "Message Identifier ... ${messageId} exists in list ..."
-                return true
+                headerFilterExists = true
               }
             }
           }
-          return false
+          return headerFilterExists
         }
         
         def getMessageCountForTopic(consumer, topic) {
