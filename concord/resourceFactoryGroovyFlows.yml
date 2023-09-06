@@ -25,11 +25,12 @@ flows:
           case 'kafka':
             def host = resolveHost(schema, environment)
             def consumer = createKafkaConsumer(host)
-            def topic = getTopic()
+            def topic = getSourceTopic()
             def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
             def filteredMessages = filterMessagesToReplay(consumer, topic, totalNumberOfMessages)
             consumer.close()
-        
+       
+            def sinkTopic = getSinkTopic() 
             
             break;
           case 'cosmosdb':
@@ -39,6 +40,13 @@ flows:
           default:
             println('Schema ' + schema + ' is not supported .....' )
             break;
+        }
+        
+        def replayMessages(messages, topic) {
+          def totalMessagesToPublish = messages.size()
+          println "Preparing to publish a total of ${totalMessagesToPublish}"
+        
+          
         }
         
         def filterMessagesToReplay(consumer, topic, totalNumberOfMessages) {
@@ -58,7 +66,6 @@ flows:
               records.each { record ->
                 numberOfMessagesReadSoFar += 1
                 if ( containsMessageIdFromHeader(record) ) {
-                  println " Adding Message To Reprocess List ..." 
                   filteredMessages.add(record)
                 }
                 
@@ -108,9 +115,14 @@ flows:
             return consumer
         }
         
-        def getTopic() {
+        def getSourceTopic() {
           def splitSource = replaySource.sourceUrl.split('://')
           return splitSource[1].split('/')[1]
+        }
+        
+        def getSinkTopic() {
+          def splitSink = replaySource.sinkUrl.split('://')
+          return splitSink[1].split('/')[1] 
         }
         
         def isProductionEnvironment(environment) {
