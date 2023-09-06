@@ -35,7 +35,7 @@ flows:
             consumer.close()
        
             def sinkTopic = getSinkTopic() 
-            replayMessages(filteredMessages, sinkTopic)
+            replayMessages(host, filteredMessages, sinkTopic)
             
             break;
           case 'cosmosdb':
