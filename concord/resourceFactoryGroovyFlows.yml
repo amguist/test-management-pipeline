@@ -52,9 +52,7 @@ flows:
           def producer = createKafkaProducer(host) 
           def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
           messages.each { message -> 
-            def headers = message.headers()
-            def messageValue = new String(message.value(), StandardCharsets.UTF_8).trim();
-            def producerRecord = new ProducerRecord(topic, messageValue)
+            def producerRecord = new ProducerRecord(topic, message.partition(), message.key(), message.value(), message.headers())
             producer.send(producerRecord)
           }
           producer.close()
@@ -117,9 +115,9 @@ flows:
         
         def createKafkaProducer(host) {
           def producer = new KafkaProducer([
-              "bootstrap.servers"      : host,
-              "value.serializer"     : "org.apache.kafka.common.serialization.StringSerializer",
-              "key.serializer"       : "org.apache.kafka.common.serialization.StringSerializer" 
+              "bootstrap.servers" : host,
+              "value.serializer"  : "org.apache.kafka.common.serialization.ByteArraySerializer",
+              "key.serializer"  : "org.apache.kafka.common.serialization.ByteArraySerializer",
           ])
           return producer
         }
