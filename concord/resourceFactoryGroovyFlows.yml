@@ -54,8 +54,8 @@ flows:
           messages.each { message -> 
             def headers = message.headers()
             def messageValue = new String(message.value(), StandardCharsets.UTF_8).trim();
-        
-            producer.send(new ProducerRecord(topic, messageValue))
+            def producerRecord = new ProducerRecord(topic, messageValue)
+            producer.send(producerRecord)
           }
           producer.close()
         }
