@@ -118,8 +118,8 @@ flows:
         def createKafkaProducer(host) {
           def producer = new KafkaProducer([
               "bootstrap.servers"      : host,
-              "value.serializer"     : "org.apache.kafka.common.serialization.ByteArraySerializer",
-              "key.serializer"       : "org.apache.kafka.common.serialization.ByteArraySerializer" 
+              "value.serializer"     : "org.apache.kafka.common.serialization.StringSerializer",
+              "key.serializer"       : "org.apache.kafka.common.serialization.StringSerializer" 
           ])
           return producer
         }
