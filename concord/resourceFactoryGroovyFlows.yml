@@ -76,11 +76,7 @@ flows:
           consumerRecord.headers().each { header ->
             if ( header.key().equals('messageId') ) {
               def messageId = new String(header.value(), StandardCharsets.UTF_8).trim();
-              println "Message Identifiers: ${messageIdentifiers}"
-              println "Message Identifier: ${messageId}"
-        
               if(messageIdentifiers.contains(messageId)) {
-                println "Message Identifier ... ${messageId} exists in list ..."
                 headerFilterExists = true
               }
             }
