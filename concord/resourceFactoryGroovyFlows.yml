@@ -53,9 +53,8 @@ flows:
           messages.each { message -> 
             def headers = message.headers()
             def messageValue = new String(message.value(), StandardCharsets.UTF_8).trim();
-            println "Dead Letter Payload: ${messageValue}" 
         
-        
+            producer.send(new ProducerRecord(topic, messageValue))
           }
           producer.close()
         }
