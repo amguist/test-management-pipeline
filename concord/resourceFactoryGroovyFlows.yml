@@ -2,6 +2,8 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
+        import com.google.gson.GsonBuilder
+        
         import java.nio.charset.StandardCharsets
         
         import java.time.Duration
@@ -43,11 +45,16 @@ flows:
             break;
         }
         
-        def replayMessages(messages, topic) {
-          def totalMessagesToPublish = messages.size()
-          println "Preparing to publish a total of ${totalMessagesToPublish}"
+        def replayMessages(host, messages, topic) {
+          def producer = createKafkaProducer(host) 
+          def gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create()
+          messages.each { message -> 
+            def headers = message.headers()
+            def deadLetterPayload = gson.toJson(message.value())
         
-          
+            println "Dead Letter Payload: ${deadLetterPayload}" 
+          }
+          producer.close()
         }
         
         def filterMessagesToReplay(consumer, topic, totalNumberOfMessages) {
@@ -103,6 +110,15 @@ flows:
               stream().
               collect(Collectors.toMap(Function.identity(), consumer::position));
           return partitions.stream().mapToLong(p -> endPartitions.get(p)).sum()
+        }
+        
+        def createKafkaProducer(host) {
+          def producer = new KafkaProducer([
+              "bootstrap.servers"      : host,
+              "value.deserializer"     : "org.apache.kafka.common.serialization.ByteArrayDeserializer",
+              "key.deserializer"       : "org.apache.kafka.common.serialization.ByteArrayDeserializer" 
+          ])
+          return producer
         }
         
         def createKafkaConsumer(host) {
