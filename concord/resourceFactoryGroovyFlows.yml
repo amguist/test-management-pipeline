@@ -30,6 +30,9 @@ flows:
             def topic = getTopic()
             def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
             def filteredMessages = filterMessagesToReplay(consumer, topic, totalNumberOfMessages)
+            
+            def filteredSize = filteredMessages.size()
+            println "Total Number Of Filtered Messages is ${filteredSize}"
             consumer.close()
             break;
           case 'cosmosdb':
@@ -58,7 +61,8 @@ flows:
               records.each { record ->
                 numberOfMessagesReadSoFar += 1
                 if ( containsMessageIdFromHeader(record) ) {
-                  println " Adding Message To Reprocess List ... \n" 
+                  println " Adding Message To Reprocess List ..." 
+                  filteredMessages.add(record)
                 }
                 
                 if (numberOfMessagesReadSoFar >= totalNumberOfMessages) {
