@@ -18,6 +18,9 @@ flows:
         
         import org.apache.kafka.common.TopicPartition
         
+        def PARAM_SEPARATOR = "&"
+        def VALUE_SEPARATOR = "="
+        
         def uri = "${replaySource.sourceUrl}"
         def environment = "${replaySource.environment}"
         
@@ -26,27 +29,24 @@ flows:
         
         switch(schema) {
           case 'kafka':
-            def host = resolveHost(schema, environment)
-            def consumer = createKafkaConsumer(host)
+            def parameters = extractParameters(PARAM_SEPARATOR,VALUE_SEPARATOR,uri)
             def topic = getSourceTopic()
-            def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
-            def filteredMessages = filterMessagesToReplay(consumer, topic, totalNumberOfMessages)
-            consumer.close()
-       
             def sinkTopic = getSinkTopic() 
-            replayMessages(host, filteredMessages, sinkTopic)
-            
-            break;
-          case 'cosmosdb':
-            println('Schema is of type Cosmos DB ....')
             def host = resolveHost(schema, environment)
+        
+            //def consumer = createKafkaConsumer(host)
+            //def totalNumberOfMessages = getMessageCountForTopic(consumer, topic)
+            //def filteredMessages = filterMessagesToReplay(consumer, topic, totalNumberOfMessages)
+            //consumer.close()
+            
+            //replayKafkaMessages(host, filteredMessages, sinkTopic)
             break;
           default:
             println('Schema ' + schema + ' is not supported .....' )
             break;
         }
         
-        def replayMessages(host, messages, topic) {
+        def replayKafkaMessages(host, messages, topic) {
           def producer = createKafkaProducer(host) 
           messages.each { message -> 
             def producerRecord = new ProducerRecord(topic, message.partition(), message.key(), message.value(), message.headers())
@@ -55,7 +55,7 @@ flows:
           producer.close()
         }
         
-        def filterMessagesToReplay(consumer, topic, totalNumberOfMessages) {
+        def filterKafkaMessagesToReplay(consumer, topic, totalNumberOfMessages) {
           def numberOfMessagesReadSoFar = 0
           def keepOnReading = true
           def filteredMessages = new ArrayList<>();
@@ -97,7 +97,7 @@ flows:
           return headerFilterExists
         }
         
-        def getMessageCountForTopic(consumer, topic) {
+        def getMessageCountForKafkaTopic(consumer, topic) {
           def partitions = consumer.partitionsFor(topic).
               stream().
               map(p -> new TopicPartition(topic, p.partition())).
@@ -166,6 +166,20 @@ flows:
             default:
               println('Schema ' + schema + ' is not supported .....' )
               break; 
+          }
+        }
+        
+        def extractParameters(paramSeparator, valueSeparator, uri) {
+          def parameters = new HashMap<>()
+          def allUriParams = URI.create(uri).getRawQuery()
+          if( allUriParams == null ) {
+            return parameters
+          } else {
+            allUriParams.split(paramSeparator).each { parameter -> 
+              def keyValuePair = parameter.split(valueSeparator, 2)
+              map.put(keyValuePair[0], decode(keyValuePair[1])
+            }
+            return parameters
           }
         }
       
