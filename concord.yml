@@ -26,7 +26,6 @@ forms:
     - messageIds: { type: "string*" }
     - enforceOrdering: { type: "string" }
     - environment: { type: "string" }
-    - facilities: { type: "string*" }
   parallelApproval:
     - action: { type: boolean }
 
