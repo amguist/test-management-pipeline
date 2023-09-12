@@ -2,11 +2,18 @@ flows:
   parse-url-definition:
     - script: groovy
       body: |
+        import java.io.UnsupportedEncodingException
+        
+        import java.net.URI
+        import java.net.URISyntaxException
+        import java.net.URLDecoder
+        
         import java.nio.charset.StandardCharsets
         
         import java.time.Duration
         
         import java.util.Collections
+        import java.util.HashMap
         
         import java.util.function.Function
         import java.util.regex.Pattern
@@ -180,6 +187,15 @@ flows:
               map.put(keyValuePair[0], decode(keyValuePair[1])
             }
             return parameters
+          }
+        }
+        
+        def decode(valueToDecode) {
+          try {
+            def decoded = URLDecoder.decode(valueToDecode, StandardCharsets.UTF_8.toString())
+            return ENCODED_NULL.equals(decoded) ? null : decoded
+          } catch ( UnsupportedEncodingException eX ) {
+            return valueToDecode
           }
         }
       
