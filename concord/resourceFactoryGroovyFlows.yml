@@ -27,6 +27,7 @@ flows:
         
         def PARAM_SEPARATOR = "&"
         def VALUE_SEPARATOR = "="
+        def ENCODED_NULL = "-null-"
         
         def uri = "${replaySource.sourceUrl}"
         def environment = "${replaySource.environment}"
