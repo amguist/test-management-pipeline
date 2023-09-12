@@ -99,18 +99,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <label><b>Facilities</b></label>
-                                        </td>
-                                        <td>
-                                            <div class="field">
-                                                <div class="ui input focus">
-                                                    <input id="facilities" name="facilities" type="text" placeholder="Facilities">
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -136,22 +124,6 @@
                 $(document).ready(function() {
                     initializeFormElements();
                 });
-
-                $('.field.example form')
-                    .form({
-                        on: 'blur',
-                        fields: {
-                            facilities: {
-                                identifier: 'facilities',
-                                rules: [
-                                    {
-                                        type: 'empty',
-                                        prompt: 'At least one facility is required'
-                                    }
-                                ]
-                            }
-                        }
-                    });
 
                 function initializeFormElements() {
                     document.getElementById("onlyTriggeredBy").innerHTML=`${data.values.executedBy}`;
