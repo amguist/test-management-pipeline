@@ -9,5 +9,5 @@ flows:
 
     - expr: ${replaySource.messageIds.stream().flatMap(str -> str.split(",").stream()).toList()}
       out: messageIdentifiers
-    - call: parse-url-definition
+    - call: reprocess-messages-from-source
 

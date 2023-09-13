@@ -1,0 +1,24 @@
+flows:
+  reprocess-messages-from-source:
+    - script: groovy
+      body: |
+        
+        def sourceUri = "${replaySource.sourceUrl}"
+        def sinkUri = "${replaySource.sinkUrl}"
+        
+        def schema = parseSchemaFromDefinition(uri)
+        
+        switch(schema) {
+          case 'kafka':
+            println('Schema ' + schema + ' processing  ....' )
+            break;
+          default:
+            println('Schema ' + schema + ' is not supported .....' )
+            break;
+        }
+        
+        
+        def parseSchemaFromDefinition(uri) {
+          def splitSource = uri.split('://')
+          return splitSource[0]
+        }

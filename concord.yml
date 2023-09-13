@@ -3,7 +3,8 @@ configuration:
     - mvn://com.walmartlabs.concord.plugins:git:1.46.0
     - mvn://org.python:jython-standalone:2.7.1
     - mvn://org.codehaus.groovy:groovy-all:pom:3.0.19
-    - mvn://org.apache.kafka:kafka-clients:2.8.1
+    - mvn://com.hawkeye.quiver:quiver-infrastructure:3.1.2
+    - mvn://com.hawkeye.quiver:quiver-messaging:3.1.2
 
   arguments:
     branch: "SCTHAWKEYE-3341"
