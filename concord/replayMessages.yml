@@ -14,7 +14,8 @@ flows:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
           messageIds: messageIdentifiers
-        requestString: ${resource.asJson(resource.writeAsString(request))}
+    - expr: "${resource.writeAsString(resource.prettyPrintJson(request))}"
+      out: requestString
 
     - if: ${replaySource.environment == "prod"}
       then:
@@ -22,17 +23,3 @@ flows:
       else:
         - log: "Hawkeye Concord | Invoking based on localhost ..."
         - log: "Hawkeye Concord | Reprocess Request Body: ${requestString}"
-
-        - task: http
-          in:
-            method: POST
-            url: "http://localhost:8080/api/v1/kafka/reprocess"
-            body: "${requestString}"
-            out: response
-        - if: ${response.success}
-          then:
-            - log: "Response received: ${response.content}"
-
-
-
-
