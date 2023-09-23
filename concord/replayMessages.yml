@@ -14,11 +14,15 @@ flows:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
           messageIds: messageIdentifiers
+        requestString: ${resource.writeAsString(request)}
+
     - if: ${replaySource.environment == "prod"}
       then:
         - log: "Hawkeye Concord | Production is not yet ready ..."
       else:
         - log: "Hawkeye Concord | Invoking based on localhost ..."
+        - log: "Hawkeye Concord | Reprocess Request Body: ${requestString}"
+          
         - task: http
           in:
             method: POST
