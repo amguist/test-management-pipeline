@@ -14,7 +14,7 @@ flows:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
           messageIds: ${messageIdentifiers}
-        requestString: ${resource.prettyPrintJson(request)}
+        requestString: ${resource.writeAsString(resource.prettyPrintJson(request))}
 
     - script: groovy
       body: |
