@@ -14,8 +14,10 @@ flows:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
           messageIds: messageIdentifiers
-    - expr: "${resource.writeAsString(resource.prettyPrintJson(request))}"
-      out: requestString
+
+    - script: groovy
+      body: |
+        println("Request Object will be ${request}")
 
     - if: ${replaySource.environment == "prod"}
       then:
