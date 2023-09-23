@@ -9,5 +9,25 @@ flows:
 
     - expr: ${replaySource.messageIds.stream().flatMap(str -> str.split(",").stream()).toList()}
       out: messageIdentifiers
-    - call: reprocess-messages-from-source
+    - set:
+        request:
+          sourceUri: "${replaySource.sourceUrl}"
+          sinkUri: "${replaySource.sinkUrl}"
+          messageIds: messageIdentifiers
+    - if: ${replaySource.environment == "prod"}
+      then:
+        - log: "Hawkeye Concord | Production is not yet ready ..."
+      else:
+        - log: "Hawkeye Concord | Invoking based on localhost ..."
+        - task: http
+          in:
+            method: POST
+            url: "http://localhost:8080/api/v1/kafka/reprocess"
+            out: response
+        - if: ${response.success}
+          then:
+            - log: "Response received: ${response.content}"
+
+
+
 
