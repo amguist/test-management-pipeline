@@ -13,7 +13,8 @@ flows:
         request:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
-          messageIds: messageIdentifiers
+          messageIds: ${messageIdentifiers}
+        requestString: ${resource.prettyPrintJson(request)}
 
     - script: groovy
       body: |
