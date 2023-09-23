@@ -14,24 +14,17 @@ flows:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
           messageIds: ${messageIdentifiers}
-        requestString: ${resource.prettyPrintJson(request)}
-
-    - script: groovy
-      body: |
-        println("Request Object will be ${request}")
 
     - if: ${replaySource.environment == "prod"}
       then:
         - log: "Hawkeye Concord | Production is not yet ready ..."
       else:
         - log: "Hawkeye Concord | Invoking based on localhost ..."
-        - log: "Hawkeye Concord | Reprocess Request Body: ${requestString}"
-
         - task: http
           in:
             method: POST
-            url: "http://localhost:8080/api/v1/kafka/reprocess"
-            body: "${requestString}"
+            url: "http://message-reprocessor:8080/api/v1/kafka/reprocess"
+            body: "${resource.prettyPrintJson(request)}"
             request: json
             response: json
             out: response
