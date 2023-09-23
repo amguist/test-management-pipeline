@@ -14,7 +14,7 @@ flows:
           sourceUri: "${replaySource.sourceUrl}"
           sinkUri: "${replaySource.sinkUrl}"
           messageIds: ${messageIdentifiers}
-        requestString: ${resource.writeAsString(resource.prettyPrintJson(request))}
+        requestString: ${resource.prettyPrintJson(request)}
 
     - script: groovy
       body: |
@@ -32,6 +32,8 @@ flows:
             method: POST
             url: "http://localhost:8080/api/v1/kafka/reprocess"
             body: "${requestString}"
+            request: json
+            response: json
             out: response
         - if: ${response.success}
           then:
