@@ -6,3 +6,5 @@ triggers:
 flows:
   githubPRCleanup:
     - log: "Cleaning up existing pull requests created based on IMA testing"
+    - set:
+        githubProducts: []

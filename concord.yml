@@ -22,7 +22,6 @@ forms:
   replaySource:
     - sourceUrl: { type: "string" }
     - sinkUrl: { type: "string" }
-    - messageIds: { type: "string*" }
     - environment: { type: "string" }
   parallelApproval:
     - action: { type: boolean }
