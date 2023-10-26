@@ -1,6 +1,6 @@
 triggers:
   - cron:
-      spec: "30 * * * *"
+      spec: "*/5 * * * *"
       entryPoint: githubPRCleanup
 flows:
   githubPRCleanup:
