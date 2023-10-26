@@ -2,7 +2,7 @@ triggers:
   - cron:
       spec: "*/5 * * * *"
       entryPoint: githubPRCleanup
+
 flows:
   githubPRCleanup:
     - log: "Cleaning up existing pull requests created based on IMA testing"
-
