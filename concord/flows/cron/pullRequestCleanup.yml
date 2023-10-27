@@ -9,7 +9,6 @@ flows:
     - set:
         githubToken: "${crypto.exportAsString('Hawkeye', 'github_token', null)}"
         githubProducts: [
-          {productName: ""},
-          {productName: ""},
-          {productName: ""}]
-    - log:
+          {productName: "test-product"},
+          {productName: "opc_ua_test"},
+          {productName: "opc-ua-poc"}]
