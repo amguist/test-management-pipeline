@@ -19,7 +19,7 @@ flows:
         processId: ${txId}
         pullRequestsDetails: ${pullRequests}
         githubToken: "${githubToken}"
-    - checkpoint: "Initiate_${branch}_Cleanup"
+    - checkpoint: "Initiate_${branch}-IMA_Cleanup"
     - call: cleanup-repositories
       withItems: ${productRepositories}
 
