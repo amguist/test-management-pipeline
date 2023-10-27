@@ -32,7 +32,7 @@ flows:
       then:
         - log: "No Open PRs to pull details for ..."
       else:
-        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName)).map(c -> c.get('number')).toList()}
+        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> c.get('number')).toList()}
           out: retrievedPullRequests
         - log: "Contents of the pull request retrieve: ${retrievedPullRequests}"
 
