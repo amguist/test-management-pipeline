@@ -45,16 +45,17 @@ flows:
     - script: groovy
       body: |
         import java.util.Date
+        import java.text.SimpleDateFormat
         import groovy.time.TimeCategory
         import groovy.time.TimeDuration
-  
+        
         def format = "yyyy-MM-dd'T'HH:mm:ssZ"
-        def createDate = new Date(1698423069000).format(format)
-        def now = new Date().format(format)
+        def createDate = new SimpleDateFormat(format).format(new Date(1698423069000))
+        def now = new SimpleDateFormat(format).format(new Date())
   
         createDate = Date.parse(format , createDate.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
         now = Date.parse(format , now.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
+  
         TimeDuration duration = TimeCategory.minus(now, createDate)
-        
-        durationInMinutes = duration.getMinutes()
+        durationInMinutes = duration.getHours()
     - log: "Duration that was calculated is as follows: ${durationInMinutes}"
