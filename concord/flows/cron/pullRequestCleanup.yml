@@ -17,4 +17,22 @@ flows:
 
   perform-cleanup:
     - log: "Cleaning up repository: ${item.productName}"
+    - task: github
+      in:
+        action: getPRList
+        accessToken: ${githubToken}
+        org: ${organization}
+        repo: ${item.productName}
+        base: "main"
+        state: "open"
+    - if: ${prList.isEmpty()}
+      then:
+        - log: "No Open PRs to pull details for ..."
+      else:
+        - log: "Contents Of PR List: ${prList}"
+        - expr: ${prList.stream().map(c -> c.get('number')).toList()}
+          out: retrievedPullRequests
+
+        - log: "Contents of the pull request retrieve: ${retrievedPullRequests}"
+
 
