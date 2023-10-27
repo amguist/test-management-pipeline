@@ -50,8 +50,8 @@ flows:
         import groovy.time.TimeDuration
         
         def format = "yyyy-MM-dd'T'HH:mm:ssZ"
-        def createDate = new SimpleDateFormat(format).format(new Date(1698423069000))
-        def now = new SimpleDateFormat(format).format(new Date())
+        def createDate = new SimpleDateFormat(format).format(new Date(1698423069000)).toString()
+        def now = new SimpleDateFormat(format).format(new Date()).toString()
   
         createDate = Date.parse(format , createDate.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
         now = Date.parse(format , now.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
