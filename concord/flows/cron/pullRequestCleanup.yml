@@ -49,12 +49,12 @@ flows:
         import groovy.time.TimeCategory
         import groovy.time.TimeDuration
         
-        def format = 
-        def createDate = new SimpleDateFormat(format).format(new Date(1698423069000)).toString()
-        def now = new SimpleDateFormat(format).format(new Date()).toString()
+        String format = "yyyy-MM-dd'T'HH:mm:ssZ"
+        String createDate = new SimpleDateFormat(format).format(new Date(1698423069000)).toString()
+        String now = new SimpleDateFormat(format).format(new Date()).toString()
   
-        createDate = Date.parse("yyyy-MM-dd'T'HH:mm:ssZ" , createDate)
-        now = Date.parse("yyyy-MM-dd'T'HH:mm:ssZ" , now)
+        createDate = Date.parse(format, createDate)
+        now = Date.parse(format, now)
   
         TimeDuration duration = TimeCategory.minus(now, createDate)
         durationInMinutes = duration.getHours()
