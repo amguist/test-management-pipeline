@@ -17,7 +17,9 @@ flows:
       withItems: ${githubProducts}
 
   perform-cleanup:
-    - log: "Cleaning up repository: ${item.productName}"
+    - set:
+        projectName: ${item.productName}
+    - log: "Cleaning up repository: ${projectName}"
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(item.productName).concat(".git")}
       out: apiUrl
     - task: github
@@ -34,7 +36,5 @@ flows:
       else:
         - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> c.get('number')).toList()}
           out: retrievedPullRequests
-        - log: "Contents of the pull request retrieve: ${retrievedPullRequests}"
-        - log: "Contents: ${retrievedPullRequests}"
-
-
+        - call: gitClosePullRequestPerBranch
+          withItems: ${retrievedPullRequests}
