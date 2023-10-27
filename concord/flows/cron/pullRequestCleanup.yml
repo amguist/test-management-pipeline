@@ -34,7 +34,6 @@ flows:
       then:
         - log: "No Open PRs to pull details for ..."
       else:
-        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> c.get('number')).toList()}
+        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> {'number':c.number,'branch':c.head.ref}).toList()}
           out: retrievedPullRequests
-        - call: gitClosePullRequestPerBranch
-          withItems: ${retrievedPullRequests}
+        - log: "Contents of Pull Requests: ${retrievePullRequests}"
