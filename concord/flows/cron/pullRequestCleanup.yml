@@ -50,12 +50,12 @@ flows:
         import groovy.time.TimeDuration
         
         String format = "yyyy-MM-dd'T'HH:mm:ssZ"
-        String createDate = new SimpleDateFormat(format).format(new Date(1698423069000)).toString()
-        String now = new SimpleDateFormat(format).format(new Date()).toString()
+        def createDate = new SimpleDateFormat(format).format(new Date(1698423069000))
+        def now = new SimpleDateFormat(format).format(new Date())
   
         createDate = Date.parse(format, createDate)
         now = Date.parse(format, now)
   
         TimeDuration duration = TimeCategory.minus(now, createDate)
-        durationInMinutes = duration.getHours()
+        durationInMinutes = duration.getDays()
     - log: "Duration that was calculated is as follows: ${durationInMinutes}"
