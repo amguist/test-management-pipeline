@@ -17,6 +17,8 @@ flows:
 
   perform-cleanup:
     - log: "Cleaning up repository: ${item.productName}"
+    - expr: ${"https://github.com/".concat(organization).concat("/").concat(item.productName).concat(".git")}
+      out: apiUrl
     - task: github
       in:
         action: getPRList
