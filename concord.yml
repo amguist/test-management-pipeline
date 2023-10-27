@@ -13,7 +13,7 @@ configuration:
     githubToken: ""
     libraryName: "common-library"
     libraryVersion: "0.0.1-SNAPSHOT"
-    organization: "hawkeye"
+    organization: "amguist"
     productRepositories: [ { product: "test-product", email: "rhon.guist@gmail.com" }, { product: "opc_ua_test", email: "rhon.guist@gmail.com" }, { product: "opc-ua-poc", email: "rhon.guist@gmail.com" } ]
     repo: ""
     version: ""
