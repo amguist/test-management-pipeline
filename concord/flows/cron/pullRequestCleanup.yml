@@ -40,4 +40,13 @@ flows:
           withItems: ${retrievedPullRequests}
 
   clean:
-    - log: "Item values are as follows: ${item}"
+    - script: groovy
+      body: |
+        import groovy.time.*
+
+        def createDate = ${item.createTs}
+        def now = new Date()
+        def format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+        createDate = Date.parse(format , createDate.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
+        println createDate
