@@ -40,13 +40,19 @@ flows:
           withItems: ${retrievedPullRequests}
 
   clean:
+    - set:
+        durationInMinutes: 0
     - script: groovy
       body: |
-        import groovy.time.*
-
-        def createDate = new Date(${item.createTs})
-        def now = new Date()
-        def format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-
+        import groovy.time.* 
+  
+        def format = "yyyy-MM-dd'T'HH:mm:ssZ"
+        def createDate = new Date(1698423069000).format(format)
+        def now = new Date().format(format)
+  
         createDate = Date.parse(format , createDate.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
-        println createDate
+        now = Date.parse(format , now.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
+        TimeDuration duration = TimeCategory.minus(now, createDate)
+        
+        durationInMinutes = duration.getMinutes()
+    - log: "Duration that was calculated is as follows: ${durationInMinutes}"
