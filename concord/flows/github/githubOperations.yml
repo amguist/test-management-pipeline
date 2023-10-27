@@ -10,18 +10,18 @@ flows:
         repo: ${projectName}
     - if: ${branchList.contains(entityId)}
       then:
-        - checkpoint: "Update_${branch}_${projectName}"
+        - checkpoint: "Update_${entityId}_${projectName}"
         - call: gitCloneBranch
           in:
             url: ${apiUrl}
       else:
-        - checkpoint: "Create_${branch}_${projectName}"
+        - checkpoint: "Create_${entityId}_${projectName}"
         - call: gitCreateBranch
           in:
             url: ${apiUrl}
 
   performCleanupOperations:
-    - checkpoint: "Clean_Up_${branch}_${projectName}"
+    - checkpoint: "Clean_Up_${entityId}_${projectName}"
     - expr: ${"https://github.com/".concat(organization).concat("/").concat(projectName).concat(".git")}
       out: apiUrl
     - expr: ${pullRequests.stream().filter(i -> projectName.equals(i.projectName)).map(i -> i.prNumber).toList()}
@@ -47,7 +47,7 @@ flows:
         accessToken: ${githubToken}
         org: ${organization}
         repo: ${projectName}
-        branch: ${branch}
+        branch: ${entityId}
 
   gitCloneBranch:
     - task: git
@@ -57,7 +57,7 @@ flows:
         auth:
           basic:
             token: ${githubToken}
-        baseBranch: ${branch}
+        baseBranch: ${entityId}
         out: "response"
     - if: "${response.ok}"
       then:
@@ -72,7 +72,7 @@ flows:
             accessToken: ${githubToken}
             org: ${organization}
             repo: ${projectName}
-            base: ${branch}
+            base: ${entityId}
             state: "open"
         - if: ${prList.isEmpty()}
           then:
@@ -118,7 +118,7 @@ flows:
           basic:
             token: ${githubToken}
         baseBranch: "main"
-        newBranch: ${branch}
+        newBranch: ${entityId}
         pushBranch: true
         out: "response"
     - if: "${response.ok}"
@@ -139,7 +139,7 @@ flows:
         auth:
           basic:
             token: ${githubToken}
-        baseBranch: ${branch}
+        baseBranch: ${entityId}
         commitMessage: "Updating Branch common.version for IMA Testing"
         commitUsername: "amguist"
         commitEmail: "rhon.guist@gmail.com"
@@ -161,7 +161,7 @@ flows:
           > ## PR Description - What and Why?
           > Please provide more detailed information for the PR where possible:
           > Pull request is a systemic build that is initiated for the building of ${libraryName} based on 
-          > version: ${libraryVersion} of Branch: ${branch}.  Will perform a test against changes made within the
+          > version: ${libraryVersion} of Branch: ${entityId}.  Will perform a test against changes made within the
           > library against all initiatives.
           >
           > ## Test Notes
@@ -178,7 +178,7 @@ flows:
           > - [ ] You have added a PRR document, if applicable.
           > - [X] You are not including to much in a single PR.  Ensure that this PR is focused.
           > - [X] Name includes Ticket Number
-        prSourceBranch: ${branch}
+        prSourceBranch: ${entityId}
         prDestinationBranch: "main"
       out:
         myPrId: ${prId}

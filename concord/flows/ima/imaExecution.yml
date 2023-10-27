@@ -39,5 +39,5 @@ flows:
         entityName: branch
         actionName: getBranchList
         responseFieldName: branchList
-        entityId: ${branch}
+        entityId: "${branch}-IMA"
         projectName: ${projectName}
