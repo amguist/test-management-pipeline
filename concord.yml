@@ -29,5 +29,5 @@ forms:
 flows:
   default:
     - set:
-        githubToken: "${crypto.exportAsString('Default', 'github_token', null)}"
+        githubToken: "${crypto.exportAsString('Hawkeye', 'github_token', null)}"
     - log: "Deployment Concord Pipeline | This is the default flow"
