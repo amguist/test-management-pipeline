@@ -34,25 +34,10 @@ flows:
       then:
         - log: "No Open PRs to pull details for ..."
       else:
-        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> {'number':c.number,'branch':c.head.ref,'createTs':c.created_at}).toList()}
+        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> {'number':c.number,'branch':c.head.ref,'createTs':c.createdAt}).toList()}
           out: retrievedPullRequests
         - call: clean
           withItems: ${retrievedPullRequests}
 
   clean:
     - log: "Item values are as follows: ${item}"
-    - script: groovy
-      body: |
-        import groovy.time.*
-
-        def start = "${item.createTs}"
-        def now = new Date()
-        def format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        
-        start = Date.parse(format , start.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
-        println start
-        now = Date.parse(format , now.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
-        println now
-        
-        TimeDuration duration = TimeCategory.minus(stop, start)
-        println duration
