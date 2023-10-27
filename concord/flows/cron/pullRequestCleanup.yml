@@ -12,9 +12,9 @@ flows:
           {productName: "test-product"},
           {productName: "opc_ua_test"},
           {productName: "opc-ua-poc"}]
-    - call: cleanup-repositories
+    - call: perform-cleanup
       withItems: ${githubProducts}
 
-  cleanup-repositories:
+  perform-cleanup:
     - log: "Cleaning up repository: ${item.product}"
 
