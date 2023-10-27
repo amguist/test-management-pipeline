@@ -16,5 +16,5 @@ flows:
       withItems: ${githubProducts}
 
   perform-cleanup:
-    - log: "Cleaning up repository: ${item.product}"
+    - log: "Cleaning up repository: ${item.productName}"
 
