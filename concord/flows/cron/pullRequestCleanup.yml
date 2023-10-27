@@ -49,19 +49,3 @@ flows:
         
         start = Date.parse(format , start.replaceAll(/([+\-])(\d\d):(\d\d)/, /$1$2$3/))
         println start
-
-    - task: github
-      in:
-        action: "closePR"
-        accessToken: ${githubToken}
-        org: ${organization}
-        repo: ${projectName}
-        prId: ${item.number}
-    - task: github
-      in:
-        action: "deleteBranch"
-        accessToken: ${githubToken}
-        org: ${organization}
-        repo: ${projectName}
-        branch: ${item.branch}
-
