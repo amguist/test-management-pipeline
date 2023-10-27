@@ -12,6 +12,7 @@ flows:
           {productName: "test-product"},
           {productName: "opc_ua_test"},
           {productName: "opc-ua-poc"}]
+        imaUserName: "amguist"
     - call: perform-cleanup
       withItems: ${githubProducts}
 
@@ -31,10 +32,8 @@ flows:
       then:
         - log: "No Open PRs to pull details for ..."
       else:
-        - log: "Contents Of PR List: ${prList}"
-        - expr: ${prList.stream().map(c -> c.get('number')).toList()}
+        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName)).map(c -> c.get('number')).toList()}
           out: retrievedPullRequests
-
         - log: "Contents of the pull request retrieve: ${retrievedPullRequests}"
 
 
