@@ -35,5 +35,6 @@ flows:
         - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> c.get('number')).toList()}
           out: retrievedPullRequests
         - log: "Contents of the pull request retrieve: ${retrievedPullRequests}"
+        - log: "Contents: ${retrievedPullRequests}"
 
 
