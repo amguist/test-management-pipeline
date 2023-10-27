@@ -34,7 +34,7 @@ flows:
       then:
         - log: "No Open PRs to pull details for ..."
       else:
-        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> {'number':c.number,'branch':c.head.ref,'created_at':c.created_at}).toList()}
+        - expr: ${prList.stream().filter(i -> i.user.login.equals(imaUserName) && i.head.ref.contains("-IMA")).map(c -> {'number':c.number,'branch':c.head.ref,'createTs':c.created_at}).toList()}
           out: retrievedPullRequests
         - call: clean
           withItems: ${retrievedPullRequests}
@@ -45,7 +45,7 @@ flows:
       body: |
         import groovy.time.*
 
-        def start = "${item.created_at}"
+        def start = "${item.createTs}"
         def now = new Date()
         def format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         
