@@ -20,7 +20,6 @@ flows:
       withItems: ${githubProducts}
 
   initialize-repo-list:
-    - log: "Repository: ${item}"
     - set:
         product:
           productName: ${item}
