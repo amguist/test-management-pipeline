@@ -12,7 +12,11 @@ flows:
         imaUserName: "amguist"
     - expr: ${secretValue.split(",")}
       out: productNames
-    - log: "Products is as follows: ${productNames}"
+    - call: initialize-repo-list
+      withItems: ${productNames}
+
+  initialize-repo-list:
+    - log: "Repository: ${item}"
 
   perform-cleanup:
     - set:
