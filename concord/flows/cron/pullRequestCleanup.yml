@@ -15,9 +15,10 @@ flows:
           {productName: "opc_ua_test"},
           {productName: "opc-ua-poc"}]
         imaUserName: "amguist"
-    - expr: ${secretValue.split(",").map(s -> s).stream().toList()}
+    - expr: ${secretValue.split(",")}
       out: productNames
     - log: "Products is as follows: ${productNames}"
+    - log: "Original product values: ${githubProducts}"
 
   perform-cleanup:
     - set:
