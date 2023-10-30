@@ -16,7 +16,7 @@ flows:
         imaUserName: "amguist"
 
     - log: "Secret value is ${secretValue}"
-    
+
     - call: perform-cleanup
       withItems: ${githubProducts}
 
@@ -46,20 +46,3 @@ flows:
   clean:
     - set:
         durationInMinutes: 0
-    - script: groovy
-      body: |
-        import java.util.Date
-        import java.text.SimpleDateFormat
-        import groovy.time.TimeCategory
-        import groovy.time.TimeDuration
-        
-        def format = 
-        def createDate = new SimpleDateFormat(format).format(new Date(1698423069000)).toString()
-        def now = new SimpleDateFormat(format).format(new Date()).toString()
-  
-        createDate = Date.parse("yyyy-MM-dd'T'HH:mm:ssZ" , createDate)
-        now = Date.parse("yyyy-MM-dd'T'HH:mm:ssZ" , now)/, /$1$2$3/))
-  
-        TimeDuration duration = TimeCategory.minus(now, createDate)
-        durationInMinutes = duration.getHours()
-    - log: "Duration that was calculated is as follows: ${durationInMinutes}"
