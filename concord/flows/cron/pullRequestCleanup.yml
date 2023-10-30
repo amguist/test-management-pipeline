@@ -9,11 +9,6 @@ flows:
     - set:
         githubToken: "${crypto.exportAsString('Hawkeye', 'github_token', null)}"
         secretValue: "${crypto.exportAsString('Hawkeye', 'hawkeye-kitt-pr-repos', null)}"
-        products: "test-product,opc_ua_test,opc-ua-poc"
-        githubProducts: [
-          {productName: "test-product"},
-          {productName: "opc_ua_test"},
-          {productName: "opc-ua-poc"}]
         imaUserName: "amguist"
     - expr: ${secretValue.split(",")}
       out: productNames
