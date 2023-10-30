@@ -16,7 +16,8 @@ flows:
       out: productNames
     - call: initialize-repo-list
       withItems: ${productNames}
-    - log: "Total Size Of GitHub Products is ${githubProducts}.size()"
+    - call: perform-cleanup
+      withItems: ${githubProducts}
 
   initialize-repo-list:
     - log: "Repository: ${item}"
