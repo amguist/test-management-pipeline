@@ -13,7 +13,6 @@ flows:
     - expr: ${secretValue.split(",")}
       out: productNames
     - log: "Products is as follows: ${productNames}"
-    - log: "Original product values: ${githubProducts}"
 
   perform-cleanup:
     - set:
