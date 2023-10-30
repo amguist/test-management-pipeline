@@ -16,7 +16,7 @@ flows:
           {productName: "opc-ua-poc"}]
         imaUserName: "amguist"
     - log: "Secret value is ${secretValue}"
-    - expr: ${secretValue.flatMap(str -> str.split(",").stream()).toList()}
+    - expr: ${secretValue.split(",").stream().map(s -> {'productName':s}).toList()}
       out: productNames
 
   perform-cleanup:
