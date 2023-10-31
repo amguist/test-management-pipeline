@@ -1,27 +1,31 @@
 flows:
   parallelExecutionMain:
-    - set:
-        githubToken: "${crypto.exportAsString('Hawkeye', 'github_token', null)}"
-        pullRequests: [ ]
-    - log: "Deployment Concord Pipeline | Parallel Execution has been invoked ...."
-    - checkpoint: "Start Parallel Execution"
-    - call: manage-repositories
-      withItems: ${productRepositories}
-    - checkpoint: "Test_Approval"
-    - form: parallelApproval
-      values:
-        branch: ${branch}
-        executedBy: "${currentUser.username}"
-        libraryName: ${libraryName}
-        libraryVersion: ${libraryVersion}
-        libraryProjects: ${productRepositories}
-        organization: ${organization}
-        processId: ${txId}
-        pullRequestsDetails: ${pullRequests}
-        githubToken: "${githubToken}"
-    - checkpoint: "Initiate_${branch}-IMA_Cleanup"
-    - call: cleanup-repositories
-      withItems: ${productRepositories}
+    - if: ${branch != "main"}
+      then:
+      - set:
+          githubToken: "${crypto.exportAsString('Hawkeye', 'github_token', null)}"
+          pullRequests: [ ]
+      - log: "Deployment Concord Pipeline | Parallel Execution has been invoked ...."
+      - checkpoint: "Start Parallel Execution"
+      - call: manage-repositories
+        withItems: ${productRepositories}
+      - checkpoint: "Test_Approval"
+      - form: parallelApproval
+        values:
+          branch: ${branch}
+          executedBy: "${currentUser.username}"
+          libraryName: ${libraryName}
+          libraryVersion: ${libraryVersion}
+          libraryProjects: ${productRepositories}
+          organization: ${organization}
+          processId: ${txId}
+          pullRequestsDetails: ${pullRequests}
+          githubToken: "${githubToken}"
+      - checkpoint: "Initiate_${branch}-IMA_Cleanup"
+      - call: cleanup-repositories
+        withItems: ${productRepositories}
+    - else:
+        - log: "Unable to perform IMA execution against branch of 'main' ...."
 
   cleanup-repositories:
     - call: performCleanupOperations
